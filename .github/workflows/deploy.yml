@@ -7,7 +7,7 @@ on:
     # 只有文档相关文件变化时才触发（可选优化）
     paths:
       - 'docs/**'
-      - 'docusaurus.config.js'
+      - 'docusaurus.config.ts'
       - 'package.json'
       - 'src/**'
       - 'static/**'
