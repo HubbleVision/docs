@@ -25,10 +25,11 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'HubbleVision', // Usually your GitHub org/user name.
-  projectName: 'Hubble', // Usually your repo name.
+  projectName: 'docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  trailingSlash: false,
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -44,6 +45,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          routeBasePath: '/',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
