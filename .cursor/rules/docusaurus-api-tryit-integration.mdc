@@ -1,0 +1,159 @@
+## Docusaurus 3 在线 API 测试（Try It）集成最佳实践（v3.8.1）
+
+面向需求：在站内提供可直接调用的交互式 API 参考与 Playground。
+
+### 方案 A：docusaurus-plugin-openapi-docs + docusaurus-theme-openapi-docs（推荐）
+- 特点：从 OpenAPI 生成参考文档，内置交互面板（Send/Try It），可分组、版本化、样式统一
+- 依赖：
+  - `docusaurus-plugin-openapi-docs`
+  - `docusaurus-theme-openapi-docs`
+- 基本配置（参考 `static/api/gateway-api.yaml`）：
+
+```ts
+// docusaurus.config.ts 片段
+import type * as Preset from '@docusaurus/preset-classic';
+import type * as OpenApiPlugin from 'docusaurus-plugin-openapi-docs';
+
+export default {
+  presets: [
+    [
+      'classic',
+      {
+        docs: {
+          sidebarPath: './sidebars.ts',
+          docItemComponent: '@theme/ApiItem', // 来自 theme-openapi
+        },
+        theme: { customCss: './src/css/custom.css' },
+      } satisfies Preset.Options,
+    ],
+  ],
+  plugins: [
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: 'api',
+        docsPluginId: 'classic',
+        config: {
+          gateway: {
+            specPath: 'static/api/gateway-api.yaml', // 也可远程 URL
+            outputDir: 'docs/api/gateway',
+            proxy: 'https://cors.pan.dev', // 浏览器调用时的 CORS 代理，可按需去掉
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+              categoryLinkSource: 'tag',
+            },
+            downloadUrl: '/api/gateway-api.yaml',
+            hideSendButton: false,
+            showSchemas: true,
+          } satisfies OpenApiPlugin.Options,
+        },
+      },
+    ],
+  ],
+  themes: ['docusaurus-theme-openapi-docs'],
+};
+```
+
+- 生成/清理命令（按需执行）：
+
+```bash
+yarn docusaurus gen-api-docs api
+# 或仅生成某个配置键：yarn docusaurus gen-api-docs gateway
+# 清理：yarn docusaurus clean-api-docs api
+```
+
+- CORS 要点（服务端必须允许，Try It 才能成功）：
+  - `Access-Control-Allow-Origin: *`
+  - `Access-Control-Allow-Methods: GET,POST,DELETE,PUT,PATCH,OPTIONS`
+  - `Access-Control-Allow-Headers: Content-Type, Authorization, api_key`
+
+- OAuth2 注意：如使用授权码流，确保提供 `oauth2-redirect.html`（可置于 `static/`），或使用默认路径。
+
+- 适用场景：需要系统性的 API 参考、分组、版本、代码示例与站点风格统一。
+
+---
+
+### 方案 B：在 MDX 中嵌入 Swagger UI（快捷 Try It）
+- 特点：上手快、页面级 Playground；适合 PoC 与单页调试
+- 依赖：`swagger-ui-react`
+- 用法（置于任意 MDX 文档，如 `docs/api/playground.md`）：
+
+```mdx
+import SwaggerUI from 'swagger-ui-react';
+import 'swagger-ui-react/swagger-ui.css';
+
+<SwaggerUI
+  url="/api/gateway-api.yaml"
+  docExpansion="none"
+  tryItOutEnabled={true}
+  persistAuthorization={true}
+/>
+```
+
+- CORS/OAuth2 与上文一致；如需自定义 OAuth：`ui.initOAuth({...})`。
+- 适用场景：仅需快速提供在线调试，不依赖自动生成的参考文档。
+
+---
+
+### 方案 C：RapiDoc（Web Component，轻量交互）
+- 特点：Web Component；可直接“可视+交互”；可在同页聚合多个片段
+- 引入脚本（全局）：在 `docusaurus.config.ts` 中添加：
+
+```ts
+export default {
+  scripts: [
+    { src: 'https://unpkg.com/rapidoc/dist/rapidoc-min.js', defer: true, type: 'module' },
+  ],
+};
+```
+
+- 在 MDX 文档中使用：
+
+```mdx
+<rapi-doc
+  spec-url="/api/gateway-api.yaml"
+  render-style="read"
+  allow-try="true"
+  server-url="https://api.example.com"/>
+```
+
+- CORS 同上；支持 `api-key-*`、`fetch-credentials` 等属性；适合“轻交互、可拼装页面”。
+
+---
+
+### 方案 D：Redocusaurus（Redoc 渲染，偏“只读参考”）
+- 特点：文档可读性强、风格统一；但 Redoc 社区版不提供 Try It（交互需商业方案或自行扩展）
+- 依赖：`redocusaurus`
+- 快速配置：
+
+```ts
+export default {
+  presets: [
+    [
+      'redocusaurus',
+      {
+        specs: [
+          { spec: 'static/api/gateway-api.yaml', route: '/api-docs/' },
+        ],
+        theme: { primaryColor: '#1890ff' },
+      },
+    ],
+  ],
+};
+```
+
+---
+
+### 统一规范与经验
+- 与内容分层：
+  - 指南型文档（为什么/怎么用）：放 `docs/api/…`，使用 MDX（Tabs、多语言示例、折叠）
+  - 参考型文档（精确定义）：由 OpenAPI 生成或嵌入（保持可搜索、可直达）
+- 版本化：OpenAPI 支持通过插件 `versions` 产出多版本，或多实例 `routeBasePath` 区分
+- 代码示例：使用 `languageTabs`（theme-openapi）或在 MDX 用 Tabs 呈现
+- 错误分类：BusinessError/SystemError/ValidationError，并提供排障建议
+- 安全：不暴露密钥；示例使用占位；如需 `withCredentials`，明确同源策略与 Cookie 策略
+- 性能：大规范可拆分与聚合（$ref）；静态资源放 `static/` 以绝对路径引用
+
+### 最小落地（本仓库建议）
+- 如仅需在线调试：优先在现有 `docs/api/playground.md` 中按“方案 B”嵌入 `SwaggerUI`，指向 `static/api/gateway-api.yaml`
+- 如需系统性参考 + Try It：采用“方案 A”，并以 tag 分组、开启 `showSchemas`、保留下载源规范 `downloadUrl`

@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # JavaScript 示例
 
+> 以下示例仅用于演示如何调用 API，请根据实际业务调整参数与错误处理。
+
 本页面提供了使用 JavaScript 调用 Hubble Gateway API 的完整示例。
 
 ## 基础设置
@@ -513,5 +515,4 @@ if (require.main === module) {
 
 ## 下一步
 
-- ⚡ [在线 API 测试](/api/playground)
 - 📚 [完整 API 文档](/api/overview)

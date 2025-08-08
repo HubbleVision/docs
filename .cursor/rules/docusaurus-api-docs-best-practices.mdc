@@ -1,0 +1,110 @@
+## Docusaurus 3 API 文档书写最佳实践（v3.8.1）
+
+### 目标
+- 一致性：结构与命名统一，降低认知负担
+- 可维护：文档与接口演进同步，版本清晰
+- 可用性：示例齐全，读者能复制即用
+
+### 目录与命名
+- 放置规范：说明文档置于 `docs/api/`；OpenAPI 规范置于 `static/api/`（静态可直接引用）
+- 文件命名：kebab-case，如 `authentication.md`、`pagination.md`、`errors.md`
+- 侧边栏：在 `sidebars.ts` 为 API 分区单独分组，依据资源域或 OpenAPI 的 tag
+
+### 单篇文档骨架（建议）
+- 开篇：一句话描述接口业务价值（说人话）
+- 快速上手：最短路径示例（cURL + 1~2 门主流语言）
+- 请求：路径、方法、必填参数、鉴权、幂等/速率限制
+- 响应：成功/失败示例，错误码与排障建议
+- 注意事项：兼容性、限流、异步/回调、重试策略
+
+### MDX 写作技巧
+- 多语言代码切换：Tabs 减少滚动距离
+
+```mdx
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X GET "https://api.example.com/v1/items" \
+  -H "Authorization: Bearer <token>"
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const res = await fetch('https://api.example.com/v1/items', {
+  headers: { Authorization: `Bearer ${token}` },
+});
+const data = await res.json();
+```
+
+  </TabItem>
+</Tabs>
+```
+
+- 大 JSON 折叠：使用 details 提升可读性
+
+```mdx
+<details>
+<summary>响应示例</summary>
+
+```json
+{
+  "success": true,
+  "data": [
+    { "id": "it_1", "name": "Item 1" }
+  ],
+  "meta": { "next": null }
+}
+```
+
+</details>
+```
+
+### 版本与多实例
+- 场景：v1/v2 或内外部接口并存时，使用多实例与清晰路由前缀
+
+```ts
+// docusaurus.config.ts 片段
+export default {
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      { id: 'api-v1', path: 'docs/api/v1', routeBasePath: 'api/v1' },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      { id: 'api-v2', path: 'docs/api/v2', routeBasePath: 'api/v2' },
+    ],
+  ],
+};
+```
+
+### 与 OpenAPI 协作
+- 规范位置：`static/api/gateway-api.yaml` 等，便于在文档与工具中直接引用
+- 映射关系：用 tag 聚类；指南型文档链接到参考型文档/操作页
+
+### 示例与错误信息
+- 最小可运行：cURL 与 1~2 门语言（JS/TS、Python）含完整 Header/路径参数
+- 错误分三类：BusinessError/SystemError/ValidationError，对应排障建议
+- 统一响应：`{ success, data/error, meta }` 严格一致
+
+### 安全与隐私
+- 不硬编码敏感信息：示例用 `<token>`、`<api_key>` 占位
+- 限流与节流：明确 `429` 重试与 `Retry-After` 指引
+
+### 质量守则
+- markdown lint：标题从 `##` 开始不跳级；中英文空格规范
+- 单文件 ≤ 400 行：更长内容拆分子文档并设索引页
+- 链接无 404：文档/锚点/图片/下载链接改动后自查
+
+### 交付检查清单
+- 快速上手（cURL + 语言示例）是否完整
+- 错误码表与排障建议是否覆盖
+- 是否链接到对应 OpenAPI 参考页
+- 是否通过 markdown lint
+- 是否 ≤ 400 行、结构清晰

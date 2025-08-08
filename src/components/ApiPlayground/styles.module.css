@@ -1,0 +1,22 @@
+.container{display:flex;gap:16px}
+.sidebar{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:16px}
+.main{flex:1;display:flex;flex-direction:column;gap:16px}
+.block{background:var(--ifm-card-background-color);border:1px solid var(--ifm-color-emphasis-200);border-radius:8px;padding:12px}
+.blockTitle{font-weight:600;margin-bottom:8px}
+.muted{color:var(--ifm-color-emphasis-600);font-size:0.9rem;margin-top:6px}
+.select{width:100%;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color)}
+.input{width:100%;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color)}
+.textarea{width:100%;min-height:120px;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color);font-family:var(--ifm-font-family-monospace)}
+.row{display:flex;gap:8px;align-items:center}
+.methodSelect{width:120px;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color);font-weight:700}
+.urlInput{flex:1;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color)}
+.sendBtn{padding:10px 16px;border:none;border-radius:6px;background:var(--ifm-color-primary);color:#fff;font-weight:600;cursor:pointer}
+.sendBtn:disabled{opacity:.6;cursor:not-allowed}
+.codeArea{width:100%;min-height:160px;padding:8px;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;background:var(--ifm-background-color);font-family:var(--ifm-font-family-monospace)}
+.statusLine{font-weight:600;margin-bottom:8px}
+.details{margin-bottom:8px}
+.responseBox{max-height:420px;overflow:auto;border:1px solid var(--ifm-color-emphasis-200);border-radius:6px;padding:8px;background:var(--ifm-background-surface-color)}
+.pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--ifm-font-family-monospace)}
+.kvRow{display:flex;gap:8px;align-items:center}
+.kvKey{min-width:180px;font-family:var(--ifm-font-family-monospace);font-weight:600}
+

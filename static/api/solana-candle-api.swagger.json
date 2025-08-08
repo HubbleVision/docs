@@ -1,0 +1,243 @@
+{
+    "schemes": ["https"],
+    "swagger": "2.0",
+    "info": {
+        "description": "Solana 区块链蜡烛图数据 API 服务，提供高效的K线数据查询功能",
+        "title": "Solana Candle API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.hubble.vision/support",
+            "email": "support@hubble.vision"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "api.hubble-rpc.xyz",
+    "basePath": "/candle/api/v1",
+    "paths": {
+        "/sol/candle": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get candle data for specified trading pairs with pagination support",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Candle Data"
+                ],
+                "summary": "Get candle data",
+                "parameters": [
+                    {
+                        "description": "Candle request parameters, including symbol (required), interval (required), start_time, end_time, page (page number starting from 1, default 1), page_size (records per page, default 100) and other fields",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RequestCandle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully returns candle data with pagination information",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResponseCandle"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.Candle": {
+            "type": "object",
+            "properties": {
+                "closeSol": {
+                    "type": "number",
+                    "example": 2.2
+                },
+                "closeUsd": {
+                    "type": "number",
+                    "example": 103.7
+                },
+                "highSol": {
+                    "type": "number",
+                    "example": 2.3
+                },
+                "highUsd": {
+                    "type": "number",
+                    "example": 105.2
+                },
+                "lowSol": {
+                    "type": "number",
+                    "example": 2
+                },
+                "lowUsd": {
+                    "type": "number",
+                    "example": 98.1
+                },
+                "openSol": {
+                    "type": "number",
+                    "example": 2.1
+                },
+                "openUsd": {
+                    "type": "number",
+                    "example": 100.5
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "example": 1622505600
+                },
+                "volumeSol": {
+                    "type": "number",
+                    "example": 1000
+                },
+                "volumeUsd": {
+                    "type": "number",
+                    "example": 50000
+                }
+            }
+        },
+        "dto.CandleInterval": {
+            "type": "string",
+            "enum": [
+                "1s",
+                "1m",
+                "1h",
+                "1d"
+            ],
+            "x-enum-varnames": [
+                "Interval1s",
+                "Interval1m",
+                "Interval1h",
+                "Interval1d"
+            ]
+        },
+        "dto.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "Invalid request format"
+                }
+            }
+        },
+        "dto.RequestCandle": {
+            "type": "object",
+            "required": [
+                "interval",
+                "symbol"
+            ],
+            "properties": {
+                "endTime": {
+                    "type": "integer",
+                    "example": 1625097600
+                },
+                "interval": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.CandleInterval"
+                        }
+                    ],
+                    "example": "1h"
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "startTime": {
+                    "type": "integer",
+                    "example": 1622505600
+                },
+                "symbol": {
+                    "type": "string",
+                    "example": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+                }
+            }
+        },
+        "dto.ResponseCandle": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Candle"
+                    }
+                },
+                "interval": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.CandleInterval"
+                        }
+                    ],
+                    "example": "1h"
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "symbol": {
+                    "type": "string",
+                    "example": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "API Key 认证，直接填写 API Key，无需 Bearer 前缀",
+            "type": "apiKey",
+            "name": "HUBBLE-API-KEY",
+            "in": "header"
+        }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
+    }
+}

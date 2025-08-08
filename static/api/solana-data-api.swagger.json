@@ -1,0 +1,422 @@
+{
+    "schemes": ["https"],
+    "swagger": "2.0",
+    "info": {
+        "description": "API for Solana transaction data",
+        "title": "Solana Data API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "https://hubble.vision",
+            "email": "support@hubble.vision"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "api.hubble-rpc.xyz",
+    "basePath": "/",
+    "paths": {
+        "/balance/api/v1/sol/balance": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get token balance for a specific wallet address and token contract address",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Balance"
+                ],
+                "summary": "Get token balance",
+                "parameters": [
+                    {
+                        "description": "Balance request parameters, including wallet (required) and token (required)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RequestBalance"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully returns token balance with unified response format",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/dto.BaseResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.BalanceData"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters",
+                        "schema": {
+                            "$ref": "#/definitions/dto.BaseResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed",
+                        "schema": {
+                            "$ref": "#/definitions/dto.BaseResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.BaseResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tx/api/v1/sol/tx": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get transaction data for specified trading pairs with pagination support",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transaction Data"
+                ],
+                "summary": "Get transaction data",
+                "parameters": [
+                    {
+                        "description": "Transaction request parameters, including symbol (required), start_time, end_time, page (page number starting from 1, default 1), page_size (records per page, default 100), min_amount (minimum transaction amount), max_amount (maximum transaction amount), min_value (minimum transaction value), max_value (maximum transaction value) and other fields",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.RequestTx"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully returns transaction data with pagination information",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ResponseTx"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.BalanceData": {
+            "type": "object",
+            "properties": {
+                "balance": {
+                    "description": "Token balance",
+                    "type": "number"
+                },
+                "token": {
+                    "description": "Token contract address",
+                    "type": "string"
+                },
+                "wallet": {
+                    "description": "Wallet address",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.BaseResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "HTTP status code",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "Response data, null for errors"
+                },
+                "message": {
+                    "description": "Response message",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.RequestBalance": {
+            "type": "object",
+            "required": [
+                "token",
+                "wallet"
+            ],
+            "properties": {
+                "token": {
+                    "description": "Token contract address\nrequired: true\nexample: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                    "type": "string"
+                },
+                "wallet": {
+                    "description": "Wallet address\nrequired: true\nexample: 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.RequestTx": {
+            "type": "object",
+            "required": [
+                "symbol"
+            ],
+            "properties": {
+                "end_time": {
+                    "description": "End time (Unix timestamp in seconds)\nexample: 1625097600",
+                    "type": "integer"
+                },
+                "max_amount": {
+                    "description": "Maximum transaction amount (denominated in SOL)\nminimum: 0\nexample: 10.0",
+                    "type": "number",
+                    "minimum": 0
+                },
+                "max_value": {
+                    "description": "Maximum transaction value (denominated in USD)\nminimum: 0\nexample: 1000.0",
+                    "type": "number",
+                    "minimum": 0
+                },
+                "min_amount": {
+                    "description": "Minimum transaction amount (denominated in SOL)\nminimum: 0\nexample: 1.5",
+                    "type": "number",
+                    "minimum": 0
+                },
+                "min_value": {
+                    "description": "Minimum transaction value (denominated in USD)\nminimum: 0\nexample: 100.0",
+                    "type": "number",
+                    "minimum": 0
+                },
+                "page": {
+                    "description": "Page number, starting from 1, default is 1\nminimum: 1\ndefault: 1\nexample: 1",
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "page_size": {
+                    "description": "Records per page, default is 100, maximum 1000\nminimum: 1\nmaximum: 1000\ndefault: 100\nexample: 100",
+                    "type": "integer",
+                    "maximum": 1000,
+                    "minimum": 1
+                },
+                "sort_by": {
+                    "description": "Sort field, supports: time(default), amount, value\nenum: time,amount,value\ndefault: time\nexample: time",
+                    "type": "string",
+                    "enum": [
+                        "time",
+                        "amount",
+                        "value"
+                    ]
+                },
+                "sort_order": {
+                    "description": "Sort direction\nenum: asc,desc\ndefault: desc\nexample: desc",
+                    "type": "string",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ]
+                },
+                "source": {
+                    "description": "Filter by DEX\nenum: Raydium,Pump Fun,Raydium V4,meteora DYN,Raydium CPMM,meteora DLMM,Orca",
+                    "type": "string",
+                    "enum": [
+                        "Raydium",
+                        "Pump Fun",
+                        "Raydium V4",
+                        "meteora DYN",
+                        "Raydium CPMM",
+                        "meteora DLMM",
+                        "Orca"
+                    ]
+                },
+                "start_time": {
+                    "description": "Start time (Unix timestamp in seconds)\nexample: 1622505600",
+                    "type": "integer"
+                },
+                "symbol": {
+                    "description": "Trading pair symbol\nrequired: true\nexample: 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+                    "type": "string"
+                },
+                "trader": {
+                    "description": "Filter by trader",
+                    "type": "string"
+                },
+                "types": {
+                    "description": "Filter by trade types (multiple selection)\nenum: buy,sell,trade,add_liquidity,remove_liquidity\nexample: [\"buy\", \"sell\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dto.ResponseTx": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "Transaction record data",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.Trade"
+                    }
+                },
+                "page": {
+                    "description": "Current page number",
+                    "type": "integer"
+                },
+                "page_size": {
+                    "description": "Records per page",
+                    "type": "integer"
+                },
+                "symbol": {
+                    "description": "Trading pair symbol",
+                    "type": "string"
+                },
+                "total_count": {
+                    "description": "Total record count",
+                    "type": "integer"
+                },
+                "total_pages": {
+                    "description": "Total page count",
+                    "type": "integer"
+                },
+                "wallets": {
+                    "description": "List of filtered wallet addresses",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dto.Trade": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "Transaction amount",
+                    "type": "number"
+                },
+                "price": {
+                    "description": "Price in USD",
+                    "type": "number"
+                },
+                "signature": {
+                    "description": "Transaction signature",
+                    "type": "string"
+                },
+                "source": {
+                    "description": "Transaction source",
+                    "type": "string"
+                },
+                "symbol": {
+                    "description": "Trading pair symbol, actually CA",
+                    "type": "string"
+                },
+                "time": {
+                    "description": "Transaction time in seconds",
+                    "type": "integer"
+                },
+                "trader": {
+                    "description": "Trader address",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Transaction type (buy/sell)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.TradeType"
+                        }
+                    ]
+                },
+                "url": {
+                    "description": "Transaction URL",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "Transaction value (price * amount)",
+                    "type": "number"
+                }
+            }
+        },
+        "dto.TradeType": {
+            "type": "string",
+            "enum": [
+                "buy",
+                "sell",
+                "trade",
+                "add_liquidity",
+                "remove_liquidity"
+            ],
+            "x-enum-comments": {
+                "TypeAddLiquidity": "Add liquidity",
+                "TypeBuy": "Buy",
+                "TypeRemoveLiquidity": "Remove liquidity",
+                "TypeSell": "Sell",
+                "TypeTrade": "Trade"
+            },
+            "x-enum-varnames": [
+                "TypeBuy",
+                "TypeSell",
+                "TypeTrade",
+                "TypeAddLiquidity",
+                "TypeRemoveLiquidity"
+            ]
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "API key for authentication. Required for all API calls.",
+            "type": "apiKey",
+            "name": "HUBBLE-API-KEY",
+            "in": "header"
+        }
+    }
+}

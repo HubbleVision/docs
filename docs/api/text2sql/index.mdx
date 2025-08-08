@@ -1,0 +1,29 @@
+---
+sidebar_position: 1
+title: Text2SQL
+---
+
+# Text2SQL（智能 NL→SQL 与图表生成）
+
+本页作为 Text2SQL 大类的概览页，汇总端点与请求/响应形态说明。示例全部放在各自的 endpoint 页面。
+
+## 基础信息
+- 基础路径：`https://api.hubble-rpc.xyz/agent/api/v1`
+- 认证方式：`HUBBLE-API-Key: <your-key>`（Header，区分大小写）
+
+<a id="request-response-variants"></a>
+## 请求/响应形态说明
+- 认证：所有端点均需在请求头携带 `HUBBLE-API-Key: <your-key>`。
+- 请求体：POST 端点以 `application/json` 发送请求体。
+- 响应形态：
+  - 非流式 JSON：一次性返回完整 JSON。
+  - 流式 SSE：以服务器推送事件的方式逐步返回。常见事件类型：
+    - `workflow_start`、`node_execution`、`plan_created`、`step_completed`、`llm_start`、`token`、`llm_end`、`node_error`、`result`、`complete`、`error`
+    - 图表相关：`chart_start`、`chart_sql_complete`、`chart_generation_start`、`chart_generation_complete`、`chart_complete`、`chart_error`
+
+## 端点概览
+- `/status`：健康检查（GET）
+- `/text2sql`：自然语言→SQL→执行→结果（POST）
+- `/generate-chart`：自然语言→SQL→执行→自动选型→生成图表（POST）
+
+> 详细参数与示例请进入左侧导航中的对应 endpoint 页面。

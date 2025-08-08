@@ -4,27 +4,269 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
+/* Global theme overrides */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Brand primary */
+  --ifm-color-primary: #04F9D2;
+  --ifm-color-primary-dark: #03dcb9;
+  --ifm-color-primary-darker: #03caaa;
+  --ifm-color-primary-darkest: #02a389;
+  --ifm-color-primary-light: #1afbdd;
+  --ifm-color-primary-lighter: #3efcdf;
+  --ifm-color-primary-lightest: #6afde7;
+
+  /* Backgrounds */
+  --ifm-background-color: #000000;
+  --ifm-background-surface-color: #242427;
+  --ifm-navbar-background-color: #000000;
+  --ifm-footer-background-color: #000000;
+  --ifm-card-background-color: var(--ifm-background-surface-color);
+
+  /* Text */
+  --ifm-font-color-base: #ffffff;
+  --ifm-color-content: #ffffff;
+  --hubble-text-primary: #ffffff;
+  --hubble-text-secondary: rgba(255, 255, 255, 0.5);
+
+  /* Code / pre */
+  --ifm-pre-background: var(--ifm-background-surface-color);
+  --ifm-code-background: var(--ifm-background-surface-color);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
+
+  /* TOC border */
+  --ifm-toc-border-color: var(--hubble-text-secondary);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+html, body {
+  background: #000000 !important;
+  color: var(--hubble-text-primary) !important;
 }
+
+/* Links use primary */
+:root a { color: var(--ifm-color-primary); }
+
+/* Big layout must stay black */
+.main-wrapper,
+.navbar, .footer,
+.theme-doc-sidebar-container,
+.docSidebarContainer,
+.theme-doc-toc-desktop { /* container strip backgrounds */
+  background-color: #000000 !important;
+}
+
+/* Panels / small surfaces use panel color */
+.card,
+.theme-admonition,
+.table-of-contents,
+.pagination-nav__item,
+.alert,
+.codeBlockContent,
+.theme-code-block,
+.docsearch-modal, /* DocSearch */
+.dropdown__menu,
+/* NOTE: menu in sidebar will be overridden below to black */
+.menu__list, .menu__list-item,
+.tabs__content,
+pre, code, kbd, samp,
+.table, table, th, td,
+.breadcrumbs, .breadcrumbs__item, .breadcrumbs__link {
+  background-color: var(--ifm-background-surface-color) !important;
+}
+
+/* Outermost sidebar menu should be black */
+.theme-doc-sidebar-container .menu,
+.theme-doc-sidebar-container .menu__list,
+.theme-doc-sidebar-container .menu__list-item {
+  background-color: #000000 !important;
+}
+
+/* Borders / separators use secondary text color */
+hr,
+.table-of-contents,
+.table-of-contents__left-border,
+.breadcrumbs, .dropdown__menu, .menu, .menu__list,
+.card, .alert, .tabs__content, .tabs__item,
+.pagination-nav__link, .pagination-nav__item,
+table, th, td, pre, code {
+  border-color: var(--hubble-text-secondary) !important;
+}
+.table-of-contents { border-left: 1px solid var(--hubble-text-secondary) !important; }
+hr { border-top: 1px solid var(--hubble-text-secondary) !important; background: var(--hubble-text-secondary) !important; }
+
+/* Navbar & footer */
+.navbar, .footer { background-color: #000000 !important; }
+
+/* Sidebar links */
+.menu__link { color: var(--hubble-text-secondary) !important; }
+.menu__link--active, .menu__link:hover { color: var(--hubble-text-primary) !important; }
+
+/* Headings and paragraphs */
+h1, h2, h3, h4, h5, h6 { color: var(--hubble-text-primary) !important; }
+p, li, dt, dd, blockquote, small, span { color: var(--hubble-text-primary) !important; }
+
+/* Muted text utility */
+.muted, .text--muted, .theme-doc-markdown details > summary, .table-of-contents__link:not(.table-of-contents__link--active) {
+  color: var(--hubble-text-secondary) !important;
+}
+
+/* Inputs, selects, textareas */
+input, select, textarea {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--hubble-text-primary) !important;
+  border-color: var(--hubble-text-secondary) !important;
+}
+
+/* Buttons */
+.button--primary,
+button.button.button--primary {
+  background-color: var(--ifm-color-primary) !important;
+  color: #000 !important; /* primary background text must be black */
+  border: none !important;
+}
+.button--secondary, .button--outline, .button {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--hubble-text-primary) !important;
+  border-color: var(--hubble-text-secondary) !important;
+}
+
+/* Primary background utilities/components -> black text */
+.bg--primary, .badge--primary, .alert--primary {
+  background-color: var(--ifm-color-primary) !important;
+  color: #000 !important;
+}
+
+/* Code blocks */
+pre[class*="language-"], code[class*="language-"], .theme-code-block, .codeBlockContainer {
+  background-color: var(--ifm-background-surface-color) !important;
+  color: var(--hubble-text-primary) !important;
+}
+
+/* Tabs */
+.tabs__item {
+  background: var(--ifm-background-surface-color) !important;
+  color: var(--hubble-text-secondary) !important;
+  border: 1px solid var(--hubble-text-secondary) !important;
+}
+.tabs__item--active { color: var(--hubble-text-primary) !important; }
+.tabs__content { background: var(--ifm-background-surface-color) !important; }
+
+/* Carets / arrows in sidebar: white icon on black square */
+.theme-doc-sidebar-container .menu__caret,
+.theme-doc-sidebar-container .menu__link--sublist:after,
+.theme-doc-sidebar-container .menu__caret:before,
+.theme-doc-sidebar-container summary .icon,
+.theme-doc-sidebar-container summary svg,
+.theme-doc-sidebar-container summary svg path {
+  background-color: #000000 !important; /* black square */
+  color: #ffffff !important;          /* white icon */
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+/* Some themes use mask/caret via ::after content */
+.theme-doc-sidebar-container .menu__link--sublist:after {
+  border: none !important;
+}
+
+/* Sidebar caret fixes: masked icon should be white on black bg */
+.theme-doc-sidebar-container .menu__caret,
+.theme-doc-sidebar-container .menu__caret::before {
+  background-color: transparent !important; /* no square background */
+  box-shadow: none !important;
+  border: none !important;
+}
+/* Docusaurus uses a masked pseudo-element for the arrow; its background-color is the icon color */
+.theme-doc-sidebar-container .menu__link--sublist:after {
+  background-color: #ffffff !important; /* white icon */
+}
+
+/* Sidebar sublist arrow: use mask icon in white, no square bg */
+.theme-doc-sidebar-container .menu__link--sublist:after {
+  background: none !important; /* remove grey svg background-image */
+  -webkit-mask-image: var(--ifm-menu-link-sublist-icon);
+  mask-image: var(--ifm-menu-link-sublist-icon);
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 1rem 1rem;
+  mask-size: 1rem 1rem;
+  background-color: #ffffff !important; /* arrow color */
+}
+
+/* Breadcrumbs separators */
+.breadcrumbs__item:not(:last-child):after {
+  color: var(--hubble-text-secondary) !important;
+}
+
+/* Breadcrumbs header bar: use panel color, white text, secondary separators */
+.theme-doc-breadcrumbs {
+  background-color: var(--ifm-background-surface-color) !important;
+  border-bottom: 1px solid var(--hubble-text-secondary) !important;
+}
+.theme-doc-breadcrumbs .container,
+.theme-doc-breadcrumbs .row {
+  background: transparent !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__link,
+.theme-doc-breadcrumbs .breadcrumbs__item {
+  color: var(--hubble-text-primary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__item:not(:last-child):after {
+  color: var(--hubble-text-secondary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__link:hover {
+  color: var(--ifm-color-primary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__link svg path,
+.theme-doc-breadcrumbs .breadcrumbs__link svg {
+  fill: var(--ifm-color-primary) !important;
+}
+
+/* Per-page breadcrumbs (subpage) */
+.theme-doc-breadcrumbs,
+.theme-doc-breadcrumbs nav[aria-label="breadcrumbs"],
+.theme-doc-breadcrumbs .breadcrumbs {
+  background-color: var(--ifm-background-surface-color) !important;
+}
+.theme-doc-breadcrumbs nav[aria-label="breadcrumbs"] {
+  padding: 0.5rem 1rem !important;
+  border-bottom: 1px solid var(--hubble-text-secondary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__item,
+.theme-doc-breadcrumbs .breadcrumbs__link { color: var(--hubble-text-primary) !important; }
+.theme-doc-breadcrumbs .breadcrumbs__item:not(:last-child):after { color: var(--hubble-text-secondary) !important; }
+.theme-doc-breadcrumbs .breadcrumbs__link:hover { color: var(--ifm-color-primary) !important; }
+.theme-doc-breadcrumbs .breadcrumbs__link svg, .theme-doc-breadcrumbs .breadcrumbs__link svg path { fill: var(--ifm-color-primary) !important; }
+
+/* Force per-page breadcrumbs containers to panel color */
+.theme-doc-breadcrumbs,
+.theme-doc-breadcrumbs .container,
+.theme-doc-breadcrumbs .row,
+.theme-doc-breadcrumbs nav[aria-label="breadcrumbs"],
+nav[aria-label="breadcrumbs"],
+.breadcrumbs,
+.breadcrumbs__container,
+.breadcrumbs + div { /* adjacent wrapper sometimes holds the bg */
+  background-color: var(--ifm-background-surface-color) !important;
+}
+
+/* Ensure breadcrumbs full-width panel background even when parent is black */
+.theme-doc-breadcrumbs {
+  position: relative;
+}
+.theme-doc-breadcrumbs::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--ifm-background-surface-color);
+  z-index: 0;
+}
+.theme-doc-breadcrumbs * { position: relative; z-index: 1; }
+
+/* Hard-hide breadcrumbs across themes */
+.theme-doc-breadcrumbs,
+.theme-doc-breadcrumbs nav[aria-label="breadcrumbs"],
+nav[aria-label="breadcrumbs"],
+.breadcrumbs { display: none !important; }
