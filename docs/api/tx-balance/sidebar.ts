@@ -5,7 +5,7 @@ const sidebar: SidebarsConfig = {
     {
       type: "doc",
       id: "api/tx-balance/index",
-      label: "Transaction / Balance 概览",
+      label: "Transaction / Balance Overview",
     },
     {
       type: "category",

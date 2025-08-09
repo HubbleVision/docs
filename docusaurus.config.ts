@@ -31,18 +31,7 @@ const config: Config = {
   onBrokenMarkdownLinks: "warn",
   trailingSlash: false,
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "zh-Hans", "ko"],
-    localeConfigs: {
-      en: { htmlLang: "en-US" },
-      "zh-Hans": { htmlLang: "zh-Hans" },
-      ko: { htmlLang: "ko-KR" },
-    },
-  },
+  // i18n removed: site runs in single-language (English) mode
 
   plugins: [
     [
@@ -96,7 +85,7 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           routeBasePath: "/",
-          // 使用 OpenAPI 主题提供的文档项组件
+          // Use OpenAPI theme's doc item component
           docItemComponent: "@theme/ApiItem",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -148,10 +137,10 @@ const config: Config = {
           position: "left",
           label: "API Overview",
         },
-        {
-          type: "localeDropdown",
-          position: "right",
-        },
+        // {
+        //   type: "localeDropdown",
+        //   position: "right",
+        // },
         // {
         //   href: "https://github.com/HubbleVision",
         //   label: "GitHub",

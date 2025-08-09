@@ -5,7 +5,7 @@ const sidebar: SidebarsConfig = {
     {
       type: "doc",
       id: "api/ohlcv/index",
-      label: "OHLCV 概览",
+      label: "OHLCV Overview",
     },
     {
       type: "category",

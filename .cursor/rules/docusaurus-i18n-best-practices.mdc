@@ -1,0 +1,172 @@
+## Docusaurus 国际化最佳实践（i18n）
+
+面向本仓库 Docusaurus v3 项目的国际化规范与落地指引。遵循“简单优先、一次做好一件事”的原则，确保多语言站点稳定、可维护、可协作。
+
+参考来源：Docusaurus 官方 i18n 教程（强烈建议完整阅读）[Docusaurus i18n 教程](https://docusaurus.io/docs/i18n/tutorial)
+
+### 目标与适用范围
+
+- **目标**：为站点提供多语言内容与界面翻译，保证目录结构清晰、流程可执行、部署可复用。
+- **适用范围**：Docs/Blog/Pages 的 Markdown/MDX 内容、主题文案（导航栏、页脚、侧边栏）、React 代码中的可见文本。
+
+### 基础配置（一次性）
+
+- 在 `docusaurus.config.ts` 启用 i18n：
+
+```ts
+// 只展示关键片段
+export default {
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-Hans', 'ko'],
+    localeConfigs: {
+      // 可按需定制 htmlLang、方向等
+      'zh-Hans': { htmlLang: 'zh-Hans' },
+      'ko': { htmlLang: 'ko' },
+    },
+  },
+  themeConfig: {
+    navbar: {
+      items: [
+        { type: 'localeDropdown', position: 'left' },
+      ],
+    },
+  },
+};
+```
+
+- 约定：`defaultLocale` 为主语言，其构建产物无前缀；其他语言以 `/<locale>/` 作为子路径。
+
+### 开发与本地预览
+
+- 按指定语言启动本地开发：
+
+```bash
+npm run start -- --locale zh-Hans
+```
+
+- 注意：每个语言是独立 SPA，不能同时启动所有语言；切换语言后若复制/新增了文件，建议重启本地服务。
+
+### 翻译来源与文件分布
+
+1) 主题/代码文案（JSON）
+- 使用 API 提取可翻译文本：
+
+```bash
+npm run write-translations -- --locale zh-Hans
+```
+
+- 生成位置：`i18n/<locale>/*.json`
+  - `i18n/<locale>/code.json`：从 React 代码与主题中提取的文案
+  - `i18n/<locale>/docusaurus-theme-classic/*.json`：主题配置（如导航栏、页脚）
+
+2) Markdown/MDX 内容
+- Docs（版本化内容）
+  - 从 `docs/` 复制到 `i18n/<locale>/docusaurus-plugin-content-docs/current/`
+- Blog
+  - 从 `blog/` 复制到 `i18n/<locale>/docusaurus-plugin-content-blog/`
+- Pages（仅 .md/.mdx）
+  - 从 `src/pages/*.md(x)` 复制到 `i18n/<locale>/docusaurus-plugin-content-pages/`
+
+示例命令（按需执行）：
+
+```bash
+mkdir -p i18n/zh-Hans/docusaurus-plugin-content-docs/current
+cp -r docs/** i18n/zh-Hans/docusaurus-plugin-content-docs/current
+
+mkdir -p i18n/zh-Hans/docusaurus-plugin-content-blog
+cp -r blog/** i18n/zh-Hans/docusaurus-plugin-content-blog
+
+mkdir -p i18n/zh-Hans/docusaurus-plugin-content-pages
+cp -r src/pages/**.md i18n/zh-Hans/docusaurus-plugin-content-pages
+cp -r src/pages/**.mdx i18n/zh-Hans/docusaurus-plugin-content-pages
+```
+
+### 在 React 代码中标注可翻译文本
+
+- 使用 `<Translate>`（JSX 场景）与 `translate()`（字符串场景）：
+
+```tsx
+import Translate, { translate } from '@docusaurus/Translate';
+
+function Example() {
+  return (
+    <>
+      <h1><Translate>欢迎来到我们的网站</Translate></h1>
+      <img
+        src="/img/home.png"
+        alt={translate({ message: '首页图标' })}
+      />
+    </>
+  );
+}
+```
+
+- 关键要点：
+  - `<Translate>` 是 JSX 元素，不是字符串；仅在 JSX 子节点等“需要元素”的上下文使用。
+  - `translate()` 返回字符串，适用于 `alt`、`title`、纯字符串属性。
+  - 仅支持简单占位符插值（ICU 子集）。复杂场景（复数、性别）可使用 `usePluralForm()` 与 `selectMessage`。
+  - 提取基于静态分析：翻译文本需是字面量，避免运行时动态拼接导致无法提取。
+
+### Markdown 翻译注意事项
+
+- 使用**显式标题 ID**，避免翻译后锚点变化导致链接失效：
+
+```md
+### 你好，世界 {#hello-world}
+```
+
+- Docs 内容遵循版本体系：主目录对应 `current/`；如启用版本化，需在各版本路径下分别维护翻译。
+
+### 部署策略
+
+- 单域名（推荐，简单稳定）
+  - `npm run build`
+  - 产物：`build/`（默认语言）、`build/<locale>/`（其他语言）
+  - 建议配置：`/<locale>/*` 定向到 `/[locale]/404.html`，避免 404 回退到默认语言。
+
+- 多子域/多部署（可选）
+  - 单语言构建：`npm run build -- --locale zh-Hans`
+  - 各部署绑定不同子域，例如 `zh.example.com`
+
+- 混合（CDN 汇聚）
+  - 先各自子域部署，再由 CDN 将 `zh.example.com` 映射为 `example.com/zh/`
+
+### 规范与流程（团队协作）
+
+- **新增语言流程**
+  - 在 `docusaurus.config.ts` 的 `locales` 中新增条目，并按需设置 `localeConfigs`。
+  - 执行 `write-translations` 初始化 JSON 文案。
+  - 复制 Docs/Blog/Pages 的 Markdown/MDX 到对应的 `i18n/<locale>/...` 目录。
+  - 本地以该语言启动，确认导航、侧边栏、页面展示与跳转正常。
+
+- **翻译提交规范**
+  - 小步提交，按目录分组（code.json、navbar/footer、docs/blog/pages）。
+  - 提交信息使用中文并说明“语言/范围/影响面”（例如：`i18n: 补充 zh-Hans 导航与页脚翻译，不影响路由`）。
+  - 严禁提交未使用的翻译键或重复键；定期清理失效条目。
+
+- **链接与锚点**
+  - 跨文档链接尽量使用相对链接，标题使用显式 `{#id}`，避免因翻译造成链接断裂。
+
+### 质量保障清单（Checklist）
+
+- [ ] `docusaurus.config.ts` 中 `i18n.locales` 与 `localeDropdown` 配置正确
+- [ ] 执行 `write-translations`，并完成 `i18n/<locale>/*.json` 的必要翻译
+- [ ] Docs/Blog/Pages 的 Markdown/MDX 已复制到 `i18n/<locale>/...`，无遗漏
+- [ ] React 文案均使用 `<Translate>`/`translate()` 标注，避免动态拼接
+- [ ] Markdown 标题使用显式 `{#id}`，跨文档链接可用
+- [ ] 本地以目标语言启动验证：导航、侧边栏、图片 `alt`、分页、搜索
+- [ ] 构建产物检查：默认语言无前缀，其他语言位于 `/<locale>/`
+- [ ] 404 行为：`/<locale>/*` 能正确定向到对应语言的 404 页面
+
+### 常见陷阱与规避
+
+- 试图在运行时拼接翻译文本（静态分析不会提取，导致缺词）
+- 在需要字符串的地方使用 `<Translate>`（得到 "[object Object]"）
+- 忽略 Pages 的 React 组件翻译（Pages 仅复制 `.md/.mdx`，React 页面走 JSON 翻译）
+- GitHub Pages 单部署限制下误用“多部署多语言”的策略
+
+### 参考
+
+- 官方教程：Docusaurus i18n Tutorial（版本 3.8 系列）[Docusaurus i18n 教程](https://docusaurus.io/docs/i18n/tutorial)
+

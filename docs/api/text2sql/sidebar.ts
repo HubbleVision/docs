@@ -5,7 +5,7 @@ const sidebar: SidebarsConfig = {
     {
       type: "doc",
       id: "api/text2sql/index",
-      label: "Text2SQL 概览",
+      label: "Text2SQL Overview",
     },
     {
       type: "category",
