@@ -1,0 +1,54 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.🚀 快速开始": {
+    "message": "🚀 快速开始",
+    "description": "The label for category 🚀 快速开始 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.📚 API 文档": {
+    "message": "📚 API 文档",
+    "description": "The label for category 📚 API 文档 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Text2SQL": {
+    "message": "Text2SQL",
+    "description": "The label for category Text2SQL in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Transaction/Balance": {
+    "message": "Transaction/Balance",
+    "description": "The label for category Transaction/Balance in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.OHLCV": {
+    "message": "OHLCV",
+    "description": "The label for category OHLCV in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.doc.概览": {
+    "message": "概览",
+    "description": "The label for the doc item 概览 in sidebar tutorialSidebar, linking to the doc api/ohlcv/index"
+  },
+  "sidebar.tutorialSidebar.doc./status": {
+    "message": "/status",
+    "description": "The label for the doc item /status in sidebar tutorialSidebar, linking to the doc api/text2sql/health-check"
+  },
+  "sidebar.tutorialSidebar.doc./text2sql": {
+    "message": "/text2sql",
+    "description": "The label for the doc item /text2sql in sidebar tutorialSidebar, linking to the doc api/text2sql/text-2-sql-conversion"
+  },
+  "sidebar.tutorialSidebar.doc./generate-chart": {
+    "message": "/generate-chart",
+    "description": "The label for the doc item /generate-chart in sidebar tutorialSidebar, linking to the doc api/text2sql/chart-generation"
+  },
+  "sidebar.tutorialSidebar.doc./tx/api/v1/sol/tx": {
+    "message": "/tx/api/v1/sol/tx",
+    "description": "The label for the doc item /tx/api/v1/sol/tx in sidebar tutorialSidebar, linking to the doc api/tx-balance/get-transaction-data"
+  },
+  "sidebar.tutorialSidebar.doc./balance/api/v1/sol/balance": {
+    "message": "/balance/api/v1/sol/balance",
+    "description": "The label for the doc item /balance/api/v1/sol/balance in sidebar tutorialSidebar, linking to the doc api/tx-balance/get-token-balance"
+  },
+  "sidebar.tutorialSidebar.doc./sol/candle": {
+    "message": "/sol/candle",
+    "description": "The label for the doc item /sol/candle in sidebar tutorialSidebar, linking to the doc api/ohlcv/get-candle-data"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "Hubble Gateway API",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Hubble Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.API Overview": {
+    "message": "API 개요",
+    "description": "Navbar item with label API Overview"
+  }
+}

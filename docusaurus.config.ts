@@ -36,7 +36,12 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "zh-Hans", "ko"],
+    localeConfigs: {
+      en: { htmlLang: "en-US" },
+      "zh-Hans": { htmlLang: "zh-Hans" },
+      ko: { htmlLang: "ko-KR" },
+    },
   },
 
   plugins: [
@@ -80,12 +85,6 @@ const config: Config = {
             showSchemas: true,
           },
         },
-      },
-    ],
-    [
-      "@docusaurus/plugin-client-redirects",
-      {
-        redirects: [{ from: "/", to: "/api/overview" }],
       },
     ],
   ],
@@ -148,6 +147,10 @@ const config: Config = {
           to: "/api/overview",
           position: "left",
           label: "API Overview",
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
         },
         // {
         //   href: "https://github.com/HubbleVision",

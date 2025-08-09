@@ -1,0 +1,24 @@
+---
+sidebar_position: 1
+title: OHLCV
+---
+
+# OHLCV（K 线数据）
+
+本页作为 OHLCV API 的概览页，汇总端点与请求/响应形态说明。示例全部放在各自的 endpoint 页面。
+
+## 基础信息
+- 基础路径：`https://api.hubble-rpc.xyz/candle/api/v1`
+- 认证方式：`HUBBLE-API-KEY: <your-key>`（Header，区分大小写）
+
+<a id="request-response-variants"></a>
+## 请求/响应形态说明
+- 认证：所有端点均需在请求头携带 `HUBBLE-API-KEY: <your-key>`。
+- 请求体：POST 端点以 `application/json` 发送请求体。
+- 统一响应与错误：
+  - （空）
+
+## 端点概览
+- `/sol/candle`：查询指定交易对的 K 线数据（POST）
+
+> 详细参数与示例请进入左侧导航中的对应 endpoint 页面。
