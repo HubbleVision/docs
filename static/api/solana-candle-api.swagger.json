@@ -2,7 +2,7 @@
     "schemes": ["https"],
     "swagger": "2.0",
     "info": {
-        "description": "Solana 区块链蜡烛图数据 API 服务，提供高效的K线数据查询功能",
+        "description": "Solana blockchain candlestick data API providing efficient OHLCV/K-line queries",
         "title": "Solana Candle API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
@@ -230,7 +230,7 @@
     },
     "securityDefinitions": {
         "ApiKeyAuth": {
-            "description": "API Key 认证，直接填写 API Key，无需 Bearer 前缀",
+            "description": "API key authentication: provide the API key directly, without the Bearer prefix",
             "type": "apiKey",
             "name": "HUBBLE-API-KEY",
             "in": "header"
