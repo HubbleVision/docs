@@ -40,7 +40,7 @@ import Heading from "@theme/Heading";
 Converts a natural language query into an SQL query and executes it. 
 
 **Authentication:**
-- Requires `HUBBLE-API-Key` header
+- Requires `HUBBLE-API-KEY` header
 
 **Streaming vs Regular Response:**
 - Set `stream: true` (default) for Server-Sent Events (SSE) streaming
@@ -72,7 +72,7 @@ fetch('/agent/api/v1/text2sql', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
-    'HUBBLE-API-Key': 'your-api-key'
+    'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
     query: 'Show me the top 10 token trades by volume today',
@@ -90,7 +90,7 @@ fetch('/agent/api/v1/text2sql', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
-    'HUBBLE-API-Key': 'your-api-key'
+    'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
     query: 'Show me the top 10 token trades by volume today',

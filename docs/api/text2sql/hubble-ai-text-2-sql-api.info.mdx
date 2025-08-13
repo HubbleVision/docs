@@ -50,13 +50,13 @@ An intelligent Text2SQL conversion service and chart generation platform based o
 
 ## Authentication
 
-All API endpoints require authentication using the `HUBBLE-API-Key` header:
+All API endpoints require authentication using the `HUBBLE-API-KEY` header:
 
 ```bash
 curl -X 'POST' \
   'https://api.hubble-rpc.xyz/agent/api/v1/text2sql' \
   -H 'accept: */*' \
-  -H 'HUBBLE-API-Key: XXXXXXXXXXXXXX' \
+  -H 'HUBBLE-API-KEY: XXXXXXXXXXXXXX' \
   -H 'Content-Type: application/json'
 ```
 
@@ -80,8 +80,8 @@ All APIs support both streaming and non-streaming modes:
     className={"openapi-tabs__security-schemes"}
   >
     <TabItem
-      label={"API Key: HUBBLE-API-Key"}
-      value={"HUBBLE-API-Key"}
+      label={"API Key: HUBBLE-API-KEY"}
+      value={"HUBBLE-API-KEY"}
     >
       
       
@@ -100,7 +100,7 @@ All APIs support both streaming and non-streaming modes:
               <th>
                 Header parameter name:
               </th><td>
-                HUBBLE-API-Key
+                HUBBLE-API-KEY
               </td>
             </tr>
           </tbody>

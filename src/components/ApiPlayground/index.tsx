@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-type ApiKeyHeader = "HUBBLE-API-Key" | "HUBBLE-API-KEY";
+type ApiKeyHeader = "HUBBLE-API-KEY";
 
 type EndpointConfig = {
   id: string;
@@ -34,7 +34,7 @@ const API_CONFIGS: ApiConfig[] = [
     id: "text2sql",
     label: "Text2SQL",
     baseUrl: "https://api.hubble-rpc.xyz/agent/api/v1",
-    apiKeyHeader: "HUBBLE-API-Key",
+    apiKeyHeader: "HUBBLE-API-KEY",
     endpoints: [
       {
         id: "status",

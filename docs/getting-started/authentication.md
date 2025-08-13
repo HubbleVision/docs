@@ -6,13 +6,12 @@ sidebar_position: 1
 
 ## API Key header
 
-- `HUBBLE-API-Key: <your-key>` (Text2SQL)
-- `HUBBLE-API-KEY: <your-key>` (Tx/Balance, OHLCV)
+- `HUBBLE-API-KEY: <your-key>` (Text2SQL, Tx/Balance, OHLCV)
 
 ## Example headers
 
 ```http
-HUBBLE-API-Key: YOUR_KEY
+HUBBLE-API-KEY: YOUR_KEY
 Content-Type: application/json
 ```
 

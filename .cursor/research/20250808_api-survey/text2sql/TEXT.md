@@ -7,21 +7,21 @@
   - 常规 JSON（一次性返回）
 
 ## 认证
-- Header：`HUBBLE-API-Key: <your-key>`（区分大小写）
+- Header：`HUBBLE-API-KEY: <your-key>`
 - 基础路径：`https://api.hubble-rpc.xyz/agent/api/v1`
 
 ## 端点与参数
 
 ### 1) GET /status（健康检查）
 - 作用：检查服务可用性
-- 认证：需要 `HUBBLE-API-Key`
+- 认证：需要 `HUBBLE-API-KEY`
 - 返回（JSON）：
   - `status` string
   - `message` string
   - `timestamp` string
 
 ### 2) POST /text2sql（自然语言 → SQL → 执行）
-- 认证：`HUBBLE-API-Key`
+- 认证：`HUBBLE-API-KEY`
 - 入参（application/json）：
   - `query` string，必填，自然语言描述
   - `stream` boolean，默认 true；true 返回 SSE 事件流，false 返回 JSON
@@ -30,7 +30,7 @@
   - JSON 模式：`{ data: any[], sql?: string, timestamp: string }`
 
 ### 3) POST /generate-chart（自然语言 → 图表）
-- 认证：`HUBBLE-API-Key`
+- 认证：`HUBBLE-API-KEY`
 - 入参（application/json）：
   - `query` string，必填，自然语言描述
   - `stream` boolean，默认 true；同上

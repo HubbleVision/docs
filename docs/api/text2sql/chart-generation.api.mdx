@@ -40,7 +40,7 @@ import Heading from "@theme/Heading";
 Generates interactive charts from natural language queries. First converts the query to SQL, executes it, then creates a chart from the data.
 
 **Authentication:**
-- Requires `HUBBLE-API-Key` header
+- Requires `HUBBLE-API-KEY` header
 
 **Streaming vs Regular Response:**
 - Set `stream: true` (default) for Server-Sent Events (SSE) streaming
@@ -80,7 +80,7 @@ fetch('/agent/api/v1/generate-chart', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
-    'HUBBLE-API-Key': 'your-api-key'
+    'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
     query: 'Show token price trends over the last 30 days',
@@ -98,7 +98,7 @@ fetch('/agent/api/v1/generate-chart', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
-    'HUBBLE-API-Key': 'your-api-key'
+    'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
     query: 'Show token price trends over the last 30 days',

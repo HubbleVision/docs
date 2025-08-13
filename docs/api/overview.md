@@ -11,7 +11,7 @@ This site aggregates three categories of public APIs from Hubble: Text2SQL, Tran
 - Text2SQL (Natural language → SQL and chart generation)
   - Docs: [/api/text2sql](/api/text2sql)
   - Base URL: `https://api.hubble-rpc.xyz/agent/api/v1`
-  - Auth header: `HUBBLE-API-Key: <your-key>`
+  - Auth header: `HUBBLE-API-KEY: <your-key>`
 
 - Transaction/Balance
   - Docs: [/api/tx-balance](/api/tx-balance)
