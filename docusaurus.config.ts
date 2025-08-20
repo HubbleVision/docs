@@ -5,7 +5,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: "Hubble Gateway API",
+  title: "Hubble API",
   tagline: "Powerful Solana blockchain data gateway service",
   favicon: "img/favicon.ico",
 
@@ -126,7 +126,7 @@ const config: Config = {
     },
     breadcrumbs: false,
     navbar: {
-      title: "Hubble Gateway API",
+      title: "Hubble API",
       logo: {
         alt: "Hubble Logo",
         src: "img/logo.svg",
