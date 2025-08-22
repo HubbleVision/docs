@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-Welcome to the Hubble Gateway API documentation site.
+Welcome to the Hubble API documentation site.
 
 - Unified API entry points and conventions
 - Clear endpoint navigation and parameter descriptions
