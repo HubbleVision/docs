@@ -9,6 +9,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
 import ResponseTabs from '@site/src/components/ResponseTabs';
+import RequestParametersTable from '@site/src/components/RequestParametersTable';
 
 # Transaction Data API
 
@@ -30,22 +31,7 @@ Retrieve detailed transaction data for Solana trading pairs with comprehensive f
 
 ## Request Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `symbol` | string | <span class="required">Yes</span> | Trading pair symbol or token contract address |
-| `page` | integer | No | Page number, starting from 1 (default: 1) |
-| `pageSize` | integer | No | Records per page, max 1000 (default: 20) |
-| `start_time` | integer | No | Start time (Unix timestamp in seconds) |
-| `end_time` | integer | No | End time (Unix timestamp in seconds) |
-| `min_amount` | number | No | Minimum transaction amount (in SOL) |
-| `max_amount` | number | No | Maximum transaction amount (in SOL) |
-| `min_value` | number | No | Minimum transaction value (in USD) |
-| `max_value` | number | No | Maximum transaction value (in USD) |
-| `trader` | string | No | Filter by specific trader address |
-| `source` | string | No | Filter by DEX (Raydium, Pump Fun, Orca, etc.) |
-| `types` | array | No | Filter by transaction types (buy, sell, trade, add_liquidity, remove_liquidity) |
-| `sort_by` | string | No | Sort field: time, amount, value (default: time) |
-| `sort_order` | string | No | Sort direction: asc, desc (default: desc) |
+<RequestParametersTable apiId="tx" endpointId="tx-list" />
 
 ## Transaction Filtering
 

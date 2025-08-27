@@ -9,6 +9,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
 import ResponseTabs from '@site/src/components/ResponseTabs';
+import RequestParametersTable from '@site/src/components/RequestParametersTable';
 
 # Chart Generation API
 
@@ -30,10 +31,7 @@ Converts natural language queries to SQL, executes the query, and automatically 
 
 ## Request Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `query` | string | <span class="required">Yes</span> | Natural language query |
-| `stream` | boolean | No | Whether to return streaming response (default: true) |
+<RequestParametersTable apiId="text2sql" endpointId="generate-chart" />
 
 ## AI Chart Selection
 

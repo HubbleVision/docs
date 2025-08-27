@@ -9,6 +9,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
 import ResponseTabs from '@site/src/components/ResponseTabs';
+import RequestParametersTable from '@site/src/components/RequestParametersTable';
 
 # Candle Data API
 
@@ -30,13 +31,7 @@ Retrieve comprehensive OHLCV (Open, High, Low, Close, Volume) candlestick data f
 
 ## Request Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `symbol` | string | <span class="required">Yes</span> | Trading pair symbol (e.g., "SOL/USDC") |
-| `interval` | string | <span class="required">Yes</span> | Time interval: 1m, 5m, 15m, 1h, 4h, 1d |
-| `limit` | integer | No | Number of candles to return (default: 100, max: 1000) |
-| `startTime` | integer | No | Start time (Unix timestamp in seconds) |
-| `endTime` | integer | No | End time (Unix timestamp in seconds) |
+<RequestParametersTable apiId="ohlcv" endpointId="candle" />
 
 ## Supported Intervals
 

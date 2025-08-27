@@ -1,0 +1,110 @@
+.tableContainer {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.parametersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.parametersTable thead {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.parametersTable th,
+.parametersTable td {
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: top;
+  border: none;
+}
+
+.parametersTable th {
+  font-weight: 600;
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.parametersTable td {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.parametersTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.parametersTable tbody tr:hover {
+  background-color: var(--ifm-color-emphasis-50);
+}
+
+.parameterName,
+.parameterType {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+}
+
+.parameterName {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+.parameterType {
+  color: var(--ifm-color-secondary);
+}
+
+.required {
+  color: var(--ifm-color-danger);
+  font-weight: bold;
+}
+
+.optional {
+  color: var(--ifm-color-secondary);
+}
+
+.defaultValue {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--ifm-color-content-secondary);
+}
+
+.defaultValue code {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+}
+
+.noParameters {
+  padding: 1rem;
+  text-align: center;
+  color: var(--ifm-color-content-secondary);
+  font-style: italic;
+  background-color: var(--ifm-color-emphasis-50);
+  border-radius: 6px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .parametersTable {
+    font-size: 0.875rem;
+  }
+  
+  .parametersTable th,
+  .parametersTable td {
+    padding: 8px 12px;
+  }
+  
+  .parameterName,
+  .parameterType {
+    font-size: 0.8rem;
+  }
+}

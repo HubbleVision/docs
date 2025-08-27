@@ -14,6 +14,14 @@ type ResponseExample = {
   body: object;
 };
 
+type RequestParameter = {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+  defaultValue?: string;
+};
+
 type EndpointConfig = {
   id: string;
   label: string;
@@ -22,6 +30,7 @@ type EndpointConfig = {
   description?: string;
   sampleBody?: object | null;
   supportsStream?: boolean;
+  requestParameters?: RequestParameter[];
   responses?: ResponseExample[];
 };
 
@@ -47,6 +56,7 @@ export const API_CONFIGS: ApiConfig[] = [
         path: "/status",
         description: "Health check",
         sampleBody: null,
+        requestParameters: [],
       },
       {
         id: "text2sql-conversion",
@@ -59,6 +69,21 @@ export const API_CONFIGS: ApiConfig[] = [
           stream: false,
         },
         supportsStream: true,
+        requestParameters: [
+          {
+            name: "query",
+            type: "string",
+            required: true,
+            description: "Natural language query to convert to SQL"
+          },
+          {
+            name: "stream",
+            type: "boolean",
+            required: false,
+            description: "Whether to return streaming response",
+            defaultValue: "true"
+          }
+        ],
         responses: [
           {
             statusCode: 200,
@@ -110,6 +135,21 @@ export const API_CONFIGS: ApiConfig[] = [
           stream: false,
         },
         supportsStream: true,
+        requestParameters: [
+          {
+            name: "query",
+            type: "string",
+            required: true,
+            description: "Natural language query"
+          },
+          {
+            name: "stream",
+            type: "boolean",
+            required: false,
+            description: "Whether to return streaming response",
+            defaultValue: "true"
+          }
+        ],
         responses: [
           {
             statusCode: 200,
@@ -185,6 +225,96 @@ export const API_CONFIGS: ApiConfig[] = [
           page: 1,
           pageSize: 20,
         },
+        requestParameters: [
+          {
+            name: "symbol",
+            type: "string",
+            required: true,
+            description: "Token symbol (e.g., SOL, ETH)"
+          },
+          {
+            name: "page",
+            type: "number",
+            required: false,
+            description: "Page number for pagination",
+            defaultValue: "1"
+          },
+          {
+            name: "pageSize",
+            type: "number",
+            required: false,
+            description: "Number of items per page",
+            defaultValue: "20"
+          },
+          {
+            name: "start_time",
+            type: "integer",
+            required: false,
+            description: "Start time (Unix timestamp in seconds)"
+          },
+          {
+            name: "end_time",
+            type: "integer",
+            required: false,
+            description: "End time (Unix timestamp in seconds)"
+          },
+          {
+            name: "min_amount",
+            type: "number",
+            required: false,
+            description: "Minimum transaction amount (in SOL)"
+          },
+          {
+            name: "max_amount",
+            type: "number",
+            required: false,
+            description: "Maximum transaction amount (in SOL)"
+          },
+          {
+            name: "min_value",
+            type: "number",
+            required: false,
+            description: "Minimum transaction value (in USD)"
+          },
+          {
+            name: "max_value",
+            type: "number",
+            required: false,
+            description: "Maximum transaction value (in USD)"
+          },
+          {
+            name: "trader",
+            type: "string",
+            required: false,
+            description: "Filter by specific trader address"
+          },
+          {
+            name: "source",
+            type: "string",
+            required: false,
+            description: "Filter by DEX (Raydium, Pump Fun, Orca, etc.)"
+          },
+          {
+            name: "types",
+            type: "array",
+            required: false,
+            description: "Filter by transaction types (buy, sell, trade, add_liquidity, remove_liquidity)"
+          },
+          {
+            name: "sort_by",
+            type: "string",
+            required: false,
+            description: "Sort field: time, amount, value",
+            defaultValue: "time"
+          },
+          {
+            name: "sort_order",
+            type: "string",
+            required: false,
+            description: "Sort direction: asc, desc",
+            defaultValue: "desc"
+          }
+        ],
         responses: [
           {
             statusCode: 200,
@@ -247,6 +377,20 @@ export const API_CONFIGS: ApiConfig[] = [
           walletAddress: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
           tokenAddress: "So11111111111111111111111111111111111111112",
         },
+        requestParameters: [
+          {
+            name: "walletAddress",
+            type: "string",
+            required: true,
+            description: "Solana wallet address"
+          },
+          {
+            name: "tokenAddress",
+            type: "string",
+            required: true,
+            description: "Token mint address"
+          }
+        ],
         responses: [
           {
             statusCode: 200,
@@ -314,6 +458,39 @@ export const API_CONFIGS: ApiConfig[] = [
           interval: "1m",
           limit: 100,
         },
+        requestParameters: [
+          {
+            name: "symbol",
+            type: "string",
+            required: true,
+            description: "Trading pair symbol (e.g., SOL/USDC)"
+          },
+          {
+            name: "interval",
+            type: "string",
+            required: true,
+            description: "Time interval (e.g., 1m, 5m, 1h, 1d)"
+          },
+          {
+            name: "limit",
+            type: "number",
+            required: false,
+            description: "Number of candles to return",
+            defaultValue: "100"
+          },
+          {
+            name: "startTime",
+            type: "integer",
+            required: false,
+            description: "Start time (Unix timestamp in seconds)"
+          },
+          {
+            name: "endTime",
+            type: "integer",
+            required: false,
+            description: "End time (Unix timestamp in seconds)"
+          }
+        ],
         responses: [
           {
             statusCode: 200,
@@ -383,4 +560,4 @@ export const API_CONFIGS: ApiConfig[] = [
 ];
 
 // 导出类型以供其他文件使用
-export type { HttpMethod, ApiKeyHeader, ResponseExample, EndpointConfig, ApiConfig };
+export type { HttpMethod, ApiKeyHeader, ResponseExample, RequestParameter, EndpointConfig, ApiConfig };
