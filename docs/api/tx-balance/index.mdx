@@ -1,27 +1,39 @@
 ---
 sidebar_position: 1
-title: Transaction / Balance
+title: "Transaction & Balance API Overview"
+description: "Access Solana transaction data and token balance information"
 ---
 
-# Transaction / Balance
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-This page is an overview for the Transaction & Balance APIs. It consolidates endpoints and request/response shapes. Examples live on their endpoint pages.
+# Transaction & Balance API Overview
 
-## Basics
-- Base URL: `https://api.hubble-rpc.xyz/`
-- Authentication: `HUBBLE-API-KEY: <your-key>` (Header, case-sensitive)
+Query Solana blockchain transaction data and token balances for any wallet address. Get comprehensive transaction history and real-time balance information.
 
-<a id="request-response-variants"></a>
-## Request/Response shapes
-- Authentication: every endpoint requires the `HUBBLE-API-KEY: <your-key>` header.
-- Request body differences:
-  - Transactions list: includes pagination fields `page`, `pageSize`, and query filters (e.g., `symbol`).
-  - Balance query: provide `walletAddress` (address) and `tokenAddress` (optional, token mint).
-- Unified response & errors:
-  - (TBD)
+## 🚀 Quick Start
 
-## Endpoints
-- `/tx/api/v1/sol/tx`: get transactions with filters and pagination (POST)
-- `/balance/api/v1/sol/balance`: get balance for address/token (POST)
+- **Base URL**: `https://api.hubble-rpc.xyz`
+- **Authentication**: Add `HUBBLE-API-KEY: <your-key>` to request headers
+- **Format**: JSON requests and responses
 
-> For detailed parameters and examples, open the specific endpoint pages from the left sidebar.
+## 📋 API Endpoints
+
+### `/tx/api/v1/sol/tx` - Transaction Data
+**POST** | Retrieve paginated transaction history for Solana addresses
+
+Get detailed transaction information including signatures, fees, amounts, and transaction status with flexible pagination support.
+
+### `/balance/api/v1/sol/balance` - Token Balance
+**POST** | Query token balance for any wallet and token combination
+
+Retrieve precise balance information including raw amounts, UI amounts, and token metadata for any SPL token.
+
+## 🎯 Getting Started
+
+1. **Get API Key** - Contact us to obtain your access key
+2. **Choose Endpoint** - Select transaction data or balance queries
+3. **Send Request** - Build requests using JSON format
+4. **Handle Response** - Process paginated results and balance data
+
+> For detailed parameter descriptions and examples, please check the specific endpoint pages in the left sidebar.

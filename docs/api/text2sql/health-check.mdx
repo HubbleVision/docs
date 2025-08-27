@@ -1,0 +1,99 @@
+---
+id: health-check
+title: "Health Check API"
+description: "Check if the service is running normally"
+sidebar_label: "Health Check"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
+import ResponseTabs from '@site/src/components/ResponseTabs';
+
+# Health Check API
+
+Check if the Text2SQL service is running normally and return service status information.
+
+<div className="api-header">
+  <div className="api-info">
+    <span className="api-method">GET</span>
+    <span className="api-path">/status</span>
+  </div>
+  <ApiPlaygroundButton 
+    initialApi="text2sql" 
+    initialEndpoint="health-check"
+    className="api-try-button"
+  >
+    Try it ▶
+  </ApiPlaygroundButton>
+</div>
+
+## Request Parameters
+
+This endpoint does not require any parameters.
+
+## Response Format
+
+### Success Response (200)
+
+```json
+{
+  "status": "healthy",
+  "message": "Service is running normally",
+  "timestamp": "2024-01-20T10:30:00Z"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | string | Service status ("healthy" or "unhealthy") |
+| `message` | string | Status description message |
+| `timestamp` | string | Response timestamp (ISO 8601 format) |
+
+## Code Examples
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X GET "https://api.hubble-rpc.xyz/agent/api/v1/status" \
+  -H "HUBBLE-API-KEY: your-api-key"
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const response = await fetch('/agent/api/v1/status', {
+  method: 'GET',
+  headers: { 
+    'HUBBLE-API-KEY': 'your-api-key'
+  }
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+
+url = "https://api.hubble-rpc.xyz/agent/api/v1/status"
+headers = {
+    "HUBBLE-API-KEY": "your-api-key"
+}
+
+response = requests.get(url, headers=headers)
+result = response.json()
+print(result)
+```
+
+  </TabItem>
+</Tabs>
+
+## Responses
+
+<ResponseTabs apiId="text2sql" endpointId="health-check" />

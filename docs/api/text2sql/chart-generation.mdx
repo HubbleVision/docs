@@ -1,0 +1,158 @@
+---
+id: chart-generation
+title: "Chart Generation API"
+description: "Generates interactive charts from natural language queries"
+sidebar_label: "Chart Generation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
+import ResponseTabs from '@site/src/components/ResponseTabs';
+
+# Chart Generation API
+
+Converts natural language queries to SQL, executes the query, and automatically generates interactive charts from the data.
+
+<div className="api-header">
+  <div className="api-info">
+    <span className="api-method">POST</span>
+    <span className="api-path">/agent/api/v1/generate-chart</span>
+  </div>
+  <ApiPlaygroundButton 
+    initialApi="text2sql" 
+    initialEndpoint="generate-chart"
+    className="api-try-button"
+  >
+    Try it ▶
+  </ApiPlaygroundButton>
+</div>
+
+## Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | <span class="required">Yes</span> | Natural language query |
+| `stream` | boolean | No | Whether to return streaming response (default: true) |
+
+## AI Chart Selection
+
+The system automatically analyzes your data and query to select the most suitable chart type:
+
+- **Line Chart** - Time series and trend data
+- **Bar Chart** - Categorical comparisons
+- **Pie Chart** - Proportional data
+- **Scatter Plot** - Correlation analysis
+- **Area Chart** - Cumulative data
+
+## Response Format
+
+### Standard Response (stream: false)
+
+```json
+{
+  "sql": "SELECT date, price FROM token_prices WHERE date >= CURRENT_DATE - INTERVAL '30 days'",
+  "data": [
+    {"date": "2024-01-01", "price": 100.5},
+    {"date": "2024-01-02", "price": 102.3}
+  ],
+  "chart": {
+    "chartType": "line",
+    "htmlCode": "<div>...</div>",
+    "previewUrl": "https://...",
+    "dataInsights": ["Price shows upward trend", "Peak reached on January 15th"],
+    "generationTime": 1500
+  },
+  "timestamp": "2024-01-20T10:30:00Z"
+}
+```
+
+### Streaming Response Event Types
+
+| Event Type | Description |
+|------------|-------------|
+| `chart_start` | Chart generation started |
+| `node_execution` | Workflow node executing |
+| `chart_sql_complete` | SQL query execution completed |
+| `chart_generation_complete` | Chart generation completed |
+| `chart_complete` | Entire process completed |
+| `chart_error` | Chart generation error |
+| `llm_start` / `token` / `llm_end` | LLM generation process |
+
+
+## Code Examples
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/generate-chart" \
+  -H "Content-Type: application/json" \
+  -H "HUBBLE-API-KEY: your-api-key" \
+  -d '{
+    "query": "Show token price trends over the last 30 days",
+    "stream": false
+  }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+// Streaming response
+const response = await fetch('/agent/api/v1/generate-chart', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show token price trends over the last 30 days',
+    stream: true // default value
+  })
+});
+
+const reader = response.body.getReader();
+// Process streaming data...
+
+// Standard response
+const data = await fetch('/agent/api/v1/generate-chart', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show token price trends over the last 30 days',
+    stream: false
+  })
+}).then(res => res.json());
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+
+url = "https://api.hubble-rpc.xyz/agent/api/v1/generate-chart"
+headers = {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+}
+data = {
+    "query": "Show token price trends over the last 30 days",
+    "stream": False
+}
+
+response = requests.post(url, json=data, headers=headers)
+result = response.json()
+```
+
+  </TabItem>
+</Tabs>
+
+
+## Responses
+
+<ResponseTabs apiId="text2sql" endpointId="generate-chart" />

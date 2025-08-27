@@ -1,24 +1,41 @@
 ---
 sidebar_position: 1
-title: OHLCV
+title: "OHLCV API Overview"
+description: "Fetch Solana blockchain candlestick and OHLCV trading data"
 ---
 
-# OHLCV (K-line Data)
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-This page is an overview for the OHLCV API. It consolidates endpoints and request/response shapes. Examples are provided on each endpoint page.
+# OHLCV API Overview
 
-## Basics
-- Base URL: `https://api.hubble-rpc.xyz/candle/api/v1`
-- Authentication: `HUBBLE-API-KEY: <your-key>` (Header, case-sensitive)
+Access comprehensive candlestick (OHLCV) data for Solana-based trading pairs. Get detailed price and volume information across multiple time intervals for technical analysis and charting.
 
-<a id="request-response-variants"></a>
-## Request/Response shapes
-- Authentication: every endpoint requires the `HUBBLE-API-KEY: <your-key>` header.
-- Request body: POST endpoints use `application/json`.
-- Unified response & errors:
-  - (TBD)
+## 🚀 Quick Start
 
-## Endpoints
-- `/sol/candle`: query K-line data for a pair (POST)
+- **Base URL**: `https://api.hubble-rpc.xyz/candle/api/v1`
+- **Authentication**: Add `HUBBLE-API-KEY: <your-key>` to request headers
+- **Format**: JSON requests and responses
 
-> For detailed parameters and examples, open the specific endpoint pages from the left sidebar.
+## 📋 API Endpoints
+
+### `/sol/candle` - Candlestick Data
+**POST** | Fetch OHLCV (Open, High, Low, Close, Volume) candle data for trading pairs
+
+Retrieve detailed candlestick data with configurable time intervals and data limits for comprehensive market analysis.
+
+Core features:
+- **Multiple Intervals** - Support for various time frames (1m, 5m, 15m, 1h, 4h, 1d)
+- **Historical Data** - Access to extensive historical price data
+- **Volume Information** - Trading volume data for each candle
+- **Flexible Limits** - Configurable data point limits for optimal performance
+
+## 🎯 Getting Started
+
+1. **Get API Key** - Contact us to obtain your access key
+2. **Choose Trading Pair** - Specify the symbol (e.g., SOL/USDC)
+3. **Set Interval** - Select your preferred time frame
+4. **Send Request** - Build requests using JSON format
+5. **Analyze Data** - Process OHLCV data for technical analysis
+
+> For detailed parameter descriptions and examples, please check the specific endpoint pages in the left sidebar.

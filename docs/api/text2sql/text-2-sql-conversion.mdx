@@ -1,0 +1,150 @@
+---
+id: text-2-sql-conversion
+title: "Text2SQL Conversion API"
+description: "Convert natural language queries to SQL and execute"
+sidebar_label: "Text2SQL Conversion"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
+import ResponseTabs from '@site/src/components/ResponseTabs';
+
+# Text2SQL Conversion API
+
+Convert natural language queries to SQL queries and execute them, returning query results. Supports both streaming and non-streaming response modes.
+
+<div className="api-header">
+  <div className="api-info">
+    <span className="api-method">POST</span>
+    <span className="api-path">/agent/api/v1/text2sql</span>
+  </div>
+  <ApiPlaygroundButton 
+    initialApi="text2sql" 
+    initialEndpoint="text2sql-conversion"
+    className="api-try-button"
+  >
+    Try it ▶
+  </ApiPlaygroundButton>
+</div>
+
+## Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | <span class="required">Yes</span> | Natural language query |
+| `stream` | boolean | No | Whether to return streaming response (default: true) |
+
+## AI SQL Generation
+
+The system automatically analyzes your natural language query and generates corresponding SQL statements:
+
+- **Data Filtering** - Filter data based on conditions
+- **Aggregation** - Statistics, sum, average and other calculations
+- **Time Range** - Date and time period filtering
+- **Sorting & Grouping** - Data sorting and grouping operations
+- **Multi-table Joins** - Cross-table data queries
+
+## Response Format
+
+### Standard Response (stream: false)
+
+```json
+{
+  "data": [
+    {"token": "SOL", "volume": 1500000.50, "date": "2024-01-20"},
+    {"token": "ETH", "volume": 2500000.75, "date": "2024-01-20"}
+  ],
+  "sql": "SELECT token, volume, date FROM trades WHERE date = CURRENT_DATE ORDER BY volume DESC LIMIT 10",
+  "timestamp": "2024-01-20T10:30:00Z"
+}
+```
+
+### Streaming Response Event Types
+
+| Event Type | Description |
+|------------|-------------|
+| `workflow_start` | Workflow execution started |
+| `node_execution` | Node is executing |
+| `plan_created` | Execution plan created |
+| `step_completed` | Step execution completed |
+| `llm_start` / `token` / `llm_end` | LLM generation process |
+| `result` | Final result |
+| `complete` | Entire process completed |
+| `error` | Execution error |
+
+## Code Examples
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/text2sql" \
+  -H "Content-Type: application/json" \
+  -H "HUBBLE-API-KEY: your-api-key" \
+  -d '{
+    "query": "Show me the top 10 token trades by volume today",
+    "stream": false
+  }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+// Streaming response
+const response = await fetch('/agent/api/v1/text2sql', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show me the top 10 token trades by volume today',
+    stream: true // default value
+  })
+});
+
+const reader = response.body.getReader();
+// Process streaming data...
+
+// Standard response
+const data = await fetch('/agent/api/v1/text2sql', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show me the top 10 token trades by volume today',
+    stream: false
+  })
+}).then(res => res.json());
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+
+url = "https://api.hubble-rpc.xyz/agent/api/v1/text2sql"
+headers = {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+}
+data = {
+    "query": "Show me the top 10 token trades by volume today",
+    "stream": False
+}
+
+response = requests.post(url, json=data, headers=headers)
+result = response.json()
+```
+
+  </TabItem>
+</Tabs>
+
+## Responses
+
+<ResponseTabs apiId="text2sql" endpointId="text2sql-conversion" />

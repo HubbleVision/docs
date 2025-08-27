@@ -1,0 +1,169 @@
+---
+id: get-candle-data
+title: "Candle Data API"
+description: "Fetch OHLCV candlestick data for Solana trading pairs"
+sidebar_label: "Candle Data"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
+import ResponseTabs from '@site/src/components/ResponseTabs';
+
+# Candle Data API
+
+Retrieve comprehensive OHLCV (Open, High, Low, Close, Volume) candlestick data for Solana trading pairs with flexible time intervals and data limits.
+
+<div className="api-header">
+  <div className="api-info">
+    <span className="api-method">POST</span>
+    <span className="api-path">/candle/api/v1/sol/candle</span>
+  </div>
+  <ApiPlaygroundButton 
+    initialApi="ohlcv" 
+    initialEndpoint="candle"
+    className="api-try-button"
+  >
+    Try it ▶
+  </ApiPlaygroundButton>
+</div>
+
+## Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `symbol` | string | <span class="required">Yes</span> | Trading pair symbol (e.g., "SOL/USDC") |
+| `interval` | string | <span class="required">Yes</span> | Time interval: 1m, 5m, 15m, 1h, 4h, 1d |
+| `limit` | integer | No | Number of candles to return (default: 100, max: 1000) |
+| `startTime` | integer | No | Start time (Unix timestamp in seconds) |
+| `endTime` | integer | No | End time (Unix timestamp in seconds) |
+
+## Supported Intervals
+
+Choose from various time frames for technical analysis:
+
+- **1m** - 1 minute candles for high-frequency trading
+- **5m** - 5 minute candles for short-term analysis
+- **15m** - 15 minute candles for intraday trading
+- **1h** - 1 hour candles for medium-term analysis
+- **4h** - 4 hour candles for swing trading
+- **1d** - Daily candles for long-term analysis
+
+## Response Format
+
+```json
+{
+  "symbol": "SOL/USDC",
+  "interval": "1m",
+  "data": [
+    {
+      "timestamp": 1642680000000,
+      "open": 150.25,
+      "high": 151.50,
+      "low": 149.80,
+      "close": 150.75,
+      "volume": 1250000.50
+    },
+    {
+      "timestamp": 1642680060000,
+      "open": 150.75,
+      "high": 152.10,
+      "low": 150.30,
+      "close": 151.25,
+      "volume": 980000.25
+    }
+  ],
+  "count": 100,
+  "timestamp": "2024-01-20T10:30:00Z"
+}
+```
+
+### Data Fields
+
+- **timestamp** - Candle timestamp in milliseconds
+- **open** - Opening price for the time period
+- **high** - Highest price during the period
+- **low** - Lowest price during the period
+- **close** - Closing price for the time period
+- **volume** - Total trading volume
+
+## Trading Analysis
+
+Use candle data for comprehensive technical analysis:
+
+- **Price Trends** - Identify upward and downward movements
+- **Support & Resistance** - Find key price levels
+- **Volume Analysis** - Understand market activity
+- **Pattern Recognition** - Detect trading patterns
+- **Risk Management** - Set stop-loss and take-profit levels
+
+## Code Examples
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X POST "https://api.hubble-rpc.xyz/candle/api/v1/sol/candle" \
+  -H "Content-Type: application/json" \
+  -H "HUBBLE-API-KEY: your-api-key" \
+  -d '{
+    "symbol": "SOL/USDC",
+    "interval": "1m",
+    "limit": 100
+  }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const response = await fetch('https://api.hubble-rpc.xyz/candle/api/v1/sol/candle', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    symbol: 'SOL/USDC',
+    interval: '1h',
+    limit: 168, // Last week of hourly data
+    startTime: Date.now() / 1000 - 7 * 24 * 60 * 60 // 7 days ago
+  })
+});
+
+const data = await response.json();
+console.log(`Retrieved ${data.data.length} candles for ${data.symbol}`);
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+import time
+
+url = "https://api.hubble-rpc.xyz/candle/api/v1/sol/candle"
+headers = {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+}
+data = {
+    "symbol": "SOL/USDC",
+    "interval": "1d",
+    "limit": 30,  # Last 30 days
+    "startTime": int(time.time()) - 30 * 24 * 60 * 60  # 30 days ago
+}
+
+response = requests.post(url, json=data, headers=headers)
+result = response.json()
+
+for candle in result['data']:
+    print(f"Date: {candle['timestamp']}, Close: ${candle['close']:.2f}")
+```
+
+  </TabItem>
+</Tabs>
+
+## Responses
+
+<ResponseTabs apiId="ohlcv" endpointId="candle" />

@@ -6,123 +6,11 @@ import React, {
   useState,
 } from "react";
 import styles from "./styles.module.css";
-
-type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-
-type ApiKeyHeader = "HUBBLE-API-KEY";
-
-type EndpointConfig = {
-  id: string;
-  label: string;
-  method: HttpMethod;
-  path: string;
-  description?: string;
-  sampleBody?: object | null;
-  supportsStream?: boolean;
-};
-
-type ApiConfig = {
-  id: "text2sql" | "tx" | "ohlcv";
-  label: string;
-  baseUrl: string;
-  apiKeyHeader: ApiKeyHeader;
-  endpoints: EndpointConfig[];
-};
-
-const API_CONFIGS: ApiConfig[] = [
-  {
-    id: "text2sql",
-    label: "Text2SQL",
-    baseUrl: "https://api.hubble-rpc.xyz/agent/api/v1",
-    apiKeyHeader: "HUBBLE-API-KEY",
-    endpoints: [
-      {
-        id: "status",
-        label: "GET /status",
-        method: "GET",
-        path: "/status",
-        description: "Health check",
-        sampleBody: null,
-      },
-      {
-        id: "text2sql",
-        label: "POST /text2sql",
-        method: "POST",
-        path: "/text2sql",
-        description: "Natural language to SQL to execution to results",
-        sampleBody: {
-          query: "Show me the top 10 token trades by volume today",
-          stream: false,
-        },
-        supportsStream: true,
-      },
-      {
-        id: "generate-chart",
-        label: "POST /generate-chart",
-        method: "POST",
-        path: "/generate-chart",
-        description:
-          "Natural language to SQL to execution with automatic chart selection",
-        sampleBody: {
-          query: "Show token price trends over the last 30 days",
-          stream: false,
-        },
-        supportsStream: true,
-      },
-    ],
-  },
-  {
-    id: "tx",
-    label: "Transaction/Balance",
-    baseUrl: "https://api.hubble-rpc.xyz",
-    apiKeyHeader: "HUBBLE-API-KEY",
-    endpoints: [
-      {
-        id: "tx-list",
-        label: "POST /tx/api/v1/sol/tx",
-        method: "POST",
-        path: "/tx/api/v1/sol/tx",
-        description: "Get transaction list (paginated)",
-        sampleBody: {
-          symbol: "SOL",
-          page: 1,
-          pageSize: 20,
-        },
-      },
-      {
-        id: "balance",
-        label: "POST /balance/api/v1/sol/balance",
-        method: "POST",
-        path: "/balance/api/v1/sol/balance",
-        description: "Get balance for a wallet address/token",
-        sampleBody: {
-          walletAddress: "<address>",
-          tokenAddress: "<mint>",
-        },
-      },
-    ],
-  },
-  {
-    id: "ohlcv",
-    label: "OHLCV",
-    baseUrl: "https://api.hubble-rpc.xyz/candle/api/v1",
-    apiKeyHeader: "HUBBLE-API-KEY",
-    endpoints: [
-      {
-        id: "candle",
-        label: "POST /sol/candle",
-        method: "POST",
-        path: "/sol/candle",
-        description: "Fetch OHLCV candle data",
-        sampleBody: {
-          symbol: "SOL/USDC",
-          interval: "1m",
-          limit: 100,
-        },
-      },
-    ],
-  },
-];
+import {
+  API_CONFIGS,
+  type HttpMethod,
+  type ApiConfig,
+} from "../../../api-playground.config";
 
 function pretty(obj: unknown) {
   try {
@@ -135,13 +23,26 @@ function pretty(obj: unknown) {
   }
 }
 
-export default function ApiPlayground(): React.ReactNode {
+interface ApiPlaygroundProps {
+  initialApi?: ApiConfig["id"];
+  initialEndpoint?: string;
+}
+
+export default function ApiPlayground({
+  initialApi: propInitialApi,
+  initialEndpoint: propInitialEndpoint,
+}: ApiPlaygroundProps = {}): React.ReactNode {
   const search = typeof window !== "undefined" ? window.location.search : "";
   const params = useMemo(() => new URLSearchParams(search), [search]);
-  const initialApi = (params.get("api") as ApiConfig["id"]) || "text2sql";
+
+  // Priority: props -> URL params -> default value
+  const initialApi =
+    propInitialApi || (params.get("api") as ApiConfig["id"]) || "text2sql";
   const [apiId, setApiId] = useState<ApiConfig["id"]>(initialApi);
   const api = useMemo(() => API_CONFIGS.find((a) => a.id === apiId)!, [apiId]);
-  const initialEndpoint = params.get("endpoint") || api.endpoints[0].id;
+
+  const initialEndpoint =
+    propInitialEndpoint || params.get("endpoint") || api.endpoints[0].id;
   const [endpointId, setEndpointId] = useState<string>(initialEndpoint);
   const endpoint = useMemo(
     () => api.endpoints.find((e) => e.id === endpointId)!,
@@ -161,14 +62,14 @@ export default function ApiPlayground(): React.ReactNode {
   const [respBody, setRespBody] = useState<string>("");
   const outputRef = useRef<HTMLDivElement | null>(null);
 
-  // keep url/method/body in sync with selection
+  // Keep URL/method/body in sync with selection
   useEffect(() => {
     setUrl(api.baseUrl + endpoint.path);
     setMethod(endpoint.method);
     setBodyText(endpoint.sampleBody ? pretty(endpoint.sampleBody) : "");
   }, [api.baseUrl, endpoint]);
 
-  // ensure api header exists in headers JSON
+  // Ensure API header exists in headers JSON
   useEffect(() => {
     try {
       const obj = headersText ? JSON.parse(headersText) : {};
@@ -180,7 +81,7 @@ export default function ApiPlayground(): React.ReactNode {
       setHeadersText(pretty(obj));
       // eslint-disable-next-line no-empty
     } catch {}
-    // only update when api changes
+    // Only update when API changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiId, apiKey]);
 
@@ -208,7 +109,7 @@ export default function ApiPlayground(): React.ReactNode {
         }
       }
 
-      // detect stream flag in JSON body for Text2SQL
+      // Detect stream flag in JSON body for Text2SQL
       const isStream =
         endpoint.supportsStream &&
         (() => {
@@ -231,7 +132,7 @@ export default function ApiPlayground(): React.ReactNode {
         const decoder = new TextDecoder();
         if (reader) {
           let aggregate = "";
-          // stream chunks
+          // Stream chunks
           // eslint-disable-next-line no-constant-condition
           while (true) {
             const { done, value } = await reader.read();
@@ -270,39 +171,70 @@ export default function ApiPlayground(): React.ReactNode {
   return (
     <div className={styles.container}>
       <div className={styles.sidebar}>
-        <div className={styles.block}>
+        {/* <div className={styles.block}>
           <div className={styles.blockTitle}>Select API</div>
-          <select
-            value={apiId}
-            onChange={(e) => setApiId(e.target.value as any)}
-            className={styles.select}
-          >
+          <div className={styles.apiTabs}>
             {API_CONFIGS.map((a) => (
-              <option key={a.id} value={a.id}>
+              <button
+                key={a.id}
+                className={`${styles.apiTab} ${apiId === a.id ? styles.active : ''}`}
+                onClick={() => setApiId(a.id)}
+              >
                 {a.label}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
+        </div> */}
+        <div className={styles.block}>
+          <div className={styles.blockTitle}>
+            <span>🔗</span>
+            Endpoint
+          </div>
+          <div className={styles.endpointDropdown}>
+            <div className={styles.customSelectWrapper}>
+              <select
+                value={endpointId}
+                onChange={(e) => setEndpointId(e.target.value)}
+                className={styles.endpointSelect}
+              >
+                {api.endpoints.map((ep) => (
+                  <option key={ep.id} value={ep.id}>
+                    {ep.method} {ep.path}{" "}
+                    {ep.description ? `- ${ep.description}` : ""}
+                  </option>
+                ))}
+              </select>
+              <div className={styles.selectIcon}></div>
+            </div>
+            <div className={styles.endpointPreview}>
+              <div className={styles.endpointPreviewHeader}>
+                <span
+                  className={`${styles.endpointMethod} ${
+                    styles[endpoint.method.toLowerCase()]
+                  }`}
+                >
+                  {endpoint.method === "GET" && "📄"}
+                  {endpoint.method === "POST" && "📝"}
+                  {endpoint.method === "PUT" && "✏️"}
+                  {endpoint.method === "PATCH" && "🔧"}
+                  {endpoint.method === "DELETE" && "🗑️"}
+                  {endpoint.method}
+                </span>
+                <span className={styles.endpointPath}>{endpoint.path}</span>
+              </div>
+              {endpoint.description && (
+                <div className={styles.endpointDescription}>
+                  {endpoint.description}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className={styles.block}>
-          <div className={styles.blockTitle}>Endpoint</div>
-          <select
-            value={endpointId}
-            onChange={(e) => setEndpointId(e.target.value)}
-            className={styles.select}
-          >
-            {api.endpoints.map((ep) => (
-              <option key={ep.id} value={ep.id}>
-                {ep.label}
-              </option>
-            ))}
-          </select>
-          {endpoint.description && (
-            <div className={styles.muted}>{endpoint.description}</div>
-          )}
-        </div>
-        <div className={styles.block}>
-          <div className={styles.blockTitle}>Authentication</div>
+          <div className={styles.blockTitle}>
+            <span>🔐</span>
+            Authentication
+          </div>
           <div className={styles.kvRow}>
             <div className={styles.kvKey}>{api.apiKeyHeader}</div>
             <input
@@ -314,7 +246,10 @@ export default function ApiPlayground(): React.ReactNode {
           </div>
         </div>
         <div className={styles.block}>
-          <div className={styles.blockTitle}>Headers (JSON)</div>
+          <div className={styles.blockTitle}>
+            <span>📋</span>
+            Headers (JSON)
+          </div>
           <textarea
             className={styles.textarea}
             value={headersText}
@@ -325,21 +260,12 @@ export default function ApiPlayground(): React.ReactNode {
 
       <div className={styles.main}>
         <div className={styles.row}>
-          <select
-            value={method}
-            onChange={(e) => setMethod(e.target.value as HttpMethod)}
-            className={styles.methodSelect}
-          >
-            {["GET", "POST", "PUT", "PATCH", "DELETE"].map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-          </select>
+          <div className={styles.method}>{method}</div>
           <input
             className={styles.urlInput}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            disabled
           />
           <button
             className={styles.sendBtn}
@@ -352,7 +278,10 @@ export default function ApiPlayground(): React.ReactNode {
 
         {method !== "GET" && (
           <div className={styles.block}>
-            <div className={styles.blockTitle}>Body (JSON)</div>
+            <div className={styles.blockTitle}>
+              <span>📝</span>
+              Body (JSON)
+            </div>
             <textarea
               className={styles.codeArea}
               value={bodyText}
@@ -367,16 +296,50 @@ export default function ApiPlayground(): React.ReactNode {
         )}
 
         <div className={styles.block}>
-          <div className={styles.blockTitle}>Response</div>
-          <div className={styles.statusLine}>{statusLine}</div>
+          <div className={styles.blockTitle}>
+            <span>📤</span>
+            Response
+          </div>
+          {statusLine && (
+            <div className={styles.statusLine}>{statusLine}</div>
+          )}
           {respHeaders && (
             <details className={styles.details}>
-              <summary>Response Headers</summary>
+              <summary>📋 Response Headers</summary>
               <pre className={styles.pre}>{respHeaders}</pre>
             </details>
           )}
           <div ref={outputRef} className={styles.responseBox}>
-            <pre className={styles.pre}>{respBody}</pre>
+            {!respBody && !loading && (
+              <div className={styles.emptyState}>
+                <div className={styles.emptyIcon}>💭</div>
+                <div className={styles.emptyTitle}>Waiting for Response</div>
+                <div className={styles.emptySubtitle}>
+                  Click the "Send" button to send a request and view the response
+                </div>
+              </div>
+            )}
+            {loading && (
+              <div className={styles.loadingState}>
+                <div className={styles.loadingSpinner}></div>
+                <div className={styles.loadingText}>Sending request...</div>
+              </div>
+            )}
+            {respBody && !loading && (
+              <div className={styles.responseContent}>
+                <div className={styles.responseHeader}>
+                  <span className={styles.responseLabel}>📄 Response Content</span>
+                  <button
+                    className={styles.copyButton}
+                    onClick={() => navigator.clipboard.writeText(respBody)}
+                    title="Copy response content"
+                  >
+                    📋
+                  </button>
+                </div>
+                <pre className={styles.pre}>{respBody}</pre>
+              </div>
+            )}
           </div>
         </div>
       </div>

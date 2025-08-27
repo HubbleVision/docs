@@ -9,24 +9,24 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Endpoints",
+      label: "Endpoints", 
       items: [
         {
           type: "doc",
           id: "api/text2sql/health-check",
-          label: "/status",
+          label: "Health Check",
           className: "api-method get",
         },
         {
           type: "doc",
           id: "api/text2sql/text-2-sql-conversion",
-          label: "/text2sql",
+          label: "Text2SQL Conversion",
           className: "api-method post",
         },
         {
           type: "doc",
           id: "api/text2sql/chart-generation",
-          label: "/generate-chart",
+          label: "Chart Generation",
           className: "api-method post",
         },
       ],

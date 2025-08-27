@@ -7,7 +7,7 @@
 /* Global theme overrides */
 :root {
   /* Brand primary */
-  --ifm-color-primary: #04F9D2;
+  --ifm-color-primary: #04f9d2;
   --ifm-color-primary-dark: #03dcb9;
   --ifm-color-primary-darker: #03caaa;
   --ifm-color-primary-darkest: #02a389;
@@ -37,20 +37,25 @@
   --ifm-toc-border-color: var(--hubble-text-secondary);
 }
 
-html, body {
+html,
+body {
   background: #000000 !important;
   color: var(--hubble-text-primary) !important;
 }
 
 /* Links use primary */
-:root a { color: var(--ifm-color-primary); }
+:root a {
+  color: var(--ifm-color-primary);
+}
 
 /* Big layout must stay black */
 .main-wrapper,
-.navbar, .footer,
+.navbar,
+.footer,
 .theme-doc-sidebar-container,
 .docSidebarContainer,
-.theme-doc-toc-desktop { /* container strip backgrounds */
+.theme-doc-toc-desktop {
+  /* container strip backgrounds */
   background-color: #000000 !important;
 }
 
@@ -70,7 +75,7 @@ html, body {
 pre, code, kbd, samp,
 .table, table, th, td,
 .breadcrumbs, .breadcrumbs__item, .breadcrumbs__link {
-  background-color: var(--ifm-background-surface-color) !important;
+  /* background-color: var(--ifm-background-surface-color) !important; */
 }
 
 /* Outermost sidebar menu should be black */
@@ -84,33 +89,77 @@ pre, code, kbd, samp,
 hr,
 .table-of-contents,
 .table-of-contents__left-border,
-.breadcrumbs, .dropdown__menu, .menu, .menu__list,
-.card, .alert, .tabs__content, .tabs__item,
-.pagination-nav__link, .pagination-nav__item,
-table, th, td, pre, code {
+.breadcrumbs,
+.dropdown__menu,
+.menu,
+.menu__list,
+.card,
+.alert,
+.tabs__content,
+.tabs__item,
+.pagination-nav__link,
+.pagination-nav__item,
+table,
+th,
+td,
+pre,
+code {
   border-color: var(--hubble-text-secondary) !important;
 }
-.table-of-contents { border-left: 1px solid var(--hubble-text-secondary) !important; }
-hr { border-top: 1px solid var(--hubble-text-secondary) !important; background: var(--hubble-text-secondary) !important; }
+.table-of-contents {
+  border-left: 1px solid var(--hubble-text-secondary) !important;
+}
+hr {
+  border-top: 1px solid var(--hubble-text-secondary) !important;
+  background: var(--hubble-text-secondary) !important;
+}
 
 /* Navbar & footer */
-.navbar, .footer { background-color: #000000 !important; }
+.navbar,
+.footer {
+  background-color: #000000 !important;
+}
 
 /* Sidebar links */
-.menu__link { color: var(--hubble-text-secondary) !important; }
-.menu__link--active, .menu__link:hover { color: var(--hubble-text-primary) !important; }
+.menu__link {
+  color: var(--hubble-text-secondary) !important;
+}
+.menu__link--active,
+.menu__link:hover {
+  color: var(--hubble-text-primary) !important;
+}
 
 /* Headings and paragraphs */
-h1, h2, h3, h4, h5, h6 { color: var(--hubble-text-primary) !important; }
-p, li, dt, dd, blockquote, small, span { color: var(--hubble-text-primary) !important; }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--hubble-text-primary) !important;
+}
+p,
+li,
+dt,
+dd,
+blockquote,
+small,
+span:not(pre span):not(.token) {
+  /* color: var(--hubble-text-primary) !important; */
+}
 
 /* Muted text utility */
-.muted, .text--muted, .theme-doc-markdown details > summary, .table-of-contents__link:not(.table-of-contents__link--active) {
+.muted,
+.text--muted,
+.theme-doc-markdown details > summary,
+.table-of-contents__link:not(.table-of-contents__link--active) {
   color: var(--hubble-text-secondary) !important;
 }
 
 /* Inputs, selects, textareas */
-input, select, textarea {
+input,
+select,
+textarea {
   background-color: var(--ifm-background-surface-color) !important;
   color: var(--hubble-text-primary) !important;
   border-color: var(--hubble-text-secondary) !important;
@@ -123,32 +172,52 @@ button.button.button--primary {
   color: #000 !important; /* primary background text must be black */
   border: none !important;
 }
-.button--secondary, .button--outline, .button {
+.button--secondary,
+.button--outline,
+.button {
   background-color: var(--ifm-background-surface-color) !important;
   color: var(--hubble-text-primary) !important;
   border-color: var(--hubble-text-secondary) !important;
 }
 
 /* Primary background utilities/components -> black text */
-.bg--primary, .badge--primary, .alert--primary {
+.bg--primary,
+.badge--primary,
+.alert--primary {
   background-color: var(--ifm-color-primary) !important;
   color: #000 !important;
 }
 
 /* Code blocks */
-pre[class*="language-"], code[class*="language-"], .theme-code-block, .codeBlockContainer {
+pre[class*="language-"],
+code[class*="language-"],
+.theme-code-block,
+.codeBlockContainer {
   background-color: var(--ifm-background-surface-color) !important;
+  /* 移除 color 覆盖，让 Prism 语法高亮正常工作 */
+}
+
+/* Tabs - 简洁下划线样式 */
+.tabs__item {
+  background: transparent !important;
+  color: var(--hubble-text-secondary) !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  transition: color 0.2s ease, border-bottom-color 0.2s ease !important;
+}
+
+.tabs__item:hover {
   color: var(--hubble-text-primary) !important;
 }
 
-/* Tabs */
-.tabs__item {
-  background: var(--ifm-background-surface-color) !important;
-  color: var(--hubble-text-secondary) !important;
-  border: 1px solid var(--hubble-text-secondary) !important;
+.tabs__item--active {
+  color: var(--ifm-color-primary) !important;
+  border-bottom-color: var(--ifm-color-primary) !important;
 }
-.tabs__item--active { color: var(--hubble-text-primary) !important; }
-.tabs__content { background: var(--ifm-background-surface-color) !important; }
+
+.tabs__content {
+  background: var(--ifm-background-surface-color) !important;
+}
 
 /* Carets / arrows in sidebar: white icon on black square */
 .theme-doc-sidebar-container .menu__caret,
@@ -158,7 +227,7 @@ pre[class*="language-"], code[class*="language-"], .theme-code-block, .codeBlock
 .theme-doc-sidebar-container summary svg,
 .theme-doc-sidebar-container summary svg path {
   background-color: #000000 !important; /* black square */
-  color: #ffffff !important;          /* white icon */
+  color: #ffffff !important; /* white icon */
   fill: #ffffff !important;
   stroke: #ffffff !important;
   box-shadow: none !important;
@@ -235,10 +304,19 @@ pre[class*="language-"], code[class*="language-"], .theme-code-block, .codeBlock
   border-bottom: 1px solid var(--hubble-text-secondary) !important;
 }
 .theme-doc-breadcrumbs .breadcrumbs__item,
-.theme-doc-breadcrumbs .breadcrumbs__link { color: var(--hubble-text-primary) !important; }
-.theme-doc-breadcrumbs .breadcrumbs__item:not(:last-child):after { color: var(--hubble-text-secondary) !important; }
-.theme-doc-breadcrumbs .breadcrumbs__link:hover { color: var(--ifm-color-primary) !important; }
-.theme-doc-breadcrumbs .breadcrumbs__link svg, .theme-doc-breadcrumbs .breadcrumbs__link svg path { fill: var(--ifm-color-primary) !important; }
+.theme-doc-breadcrumbs .breadcrumbs__link {
+  color: var(--hubble-text-primary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__item:not(:last-child):after {
+  color: var(--hubble-text-secondary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__link:hover {
+  color: var(--ifm-color-primary) !important;
+}
+.theme-doc-breadcrumbs .breadcrumbs__link svg,
+.theme-doc-breadcrumbs .breadcrumbs__link svg path {
+  fill: var(--ifm-color-primary) !important;
+}
 
 /* Force per-page breadcrumbs containers to panel color */
 .theme-doc-breadcrumbs,
@@ -248,7 +326,8 @@ pre[class*="language-"], code[class*="language-"], .theme-code-block, .codeBlock
 nav[aria-label="breadcrumbs"],
 .breadcrumbs,
 .breadcrumbs__container,
-.breadcrumbs + div { /* adjacent wrapper sometimes holds the bg */
+.breadcrumbs + div {
+  /* adjacent wrapper sometimes holds the bg */
   background-color: var(--ifm-background-surface-color) !important;
 }
 
@@ -257,16 +336,140 @@ nav[aria-label="breadcrumbs"],
   position: relative;
 }
 .theme-doc-breadcrumbs::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-color: var(--ifm-background-surface-color);
   z-index: 0;
 }
-.theme-doc-breadcrumbs * { position: relative; z-index: 1; }
+.theme-doc-breadcrumbs * {
+  position: relative;
+  z-index: 1;
+}
 
 /* Hard-hide breadcrumbs across themes */
 .theme-doc-breadcrumbs,
 .theme-doc-breadcrumbs nav[aria-label="breadcrumbs"],
 nav[aria-label="breadcrumbs"],
-.breadcrumbs { display: none !important; }
+.breadcrumbs {
+  display: none !important;
+}
+
+/* API 接口信息条样式 */
+.api-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--hubble-text-secondary);
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin: 24px 0;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.api-header:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 16px rgba(4, 249, 210, 0.15);
+}
+
+.api-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.api-method {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  min-width: 60px;
+  color: #000 !important;
+  background: var(--ifm-color-primary);
+  border: 1px solid var(--ifm-color-primary);
+}
+
+.api-path {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--hubble-text-primary);
+  background: rgba(4, 249, 210, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(4, 249, 210, 0.3);
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.api-try-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary) 0%,
+    var(--ifm-color-primary-dark) 100%
+  );
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(4, 249, 210, 0.3);
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+}
+
+.api-try-button:active {
+  transform: translateY(0);
+}
+
+/* 参数表格必填项样式 */
+.required {
+  color: #ff4757 !important;
+  font-weight: 600 !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .api-header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .api-info {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .api-path {
+    width: 100%;
+    text-align: center;
+  }
+
+  .api-try-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

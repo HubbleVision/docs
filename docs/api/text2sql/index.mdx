@@ -1,29 +1,42 @@
 ---
 sidebar_position: 1
-title: Text2SQL
+title: "Text2SQL API Overview"
+description: "Transform natural language into SQL queries and blockchain data insights"
 ---
 
-# Text2SQL (NL→SQL and Chart Generation)
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-This page is an overview for the Text2SQL category. It consolidates endpoints and request/response shapes. Examples are provided on each endpoint page.
+# Text2SQL API Overview
 
-## Basics
-- Base URL: `https://api.hubble-rpc.xyz/agent/api/v1`
-- Authentication: `HUBBLE-API-KEY: <your-key>` (Header, case-sensitive)
+Query blockchain data using natural language without writing complex SQL statements. The Text2SQL API provides a complete solution from text to data visualization.
 
-<a id="request-response-variants"></a>
-## Request/Response shapes
-- Authentication: every endpoint requires the `HUBBLE-API-KEY: <your-key>` header.
-- Request body: POST endpoints use `application/json`.
-- Response types:
-  - Non-streaming JSON: returns the full JSON at once.
-  - Streaming SSE: returns data as Server-Sent Events. Common event types:
-    - `workflow_start`, `node_execution`, `plan_created`, `step_completed`, `llm_start`, `token`, `llm_end`, `node_error`, `result`, `complete`, `error`
-    - Chart-related: `chart_start`, `chart_sql_complete`, `chart_generation_start`, `chart_generation_complete`, `chart_complete`, `chart_error`
+## 🚀 Quick Start
 
-## Endpoints
-- `/status`: health check (GET)
-- `/text2sql`: NL → SQL → execute → result (POST)
-- `/generate-chart`: NL → SQL → execute → auto charting → chart generation (POST)
+- **Base URL**: `https://api.hubble-rpc.xyz/agent/api/v1`
+- **Authentication**: Add `HUBBLE-API-KEY: <your-key>` to request headers
+- **Format**: JSON requests with streaming response support
 
-> For detailed parameters and examples, open the specific endpoint pages from the left sidebar.
+## 📋 API Endpoints
+
+### `/status` - Health Check
+**GET** | Check service status to ensure API is running properly
+
+### `/text2sql` - Smart Data Query  
+**POST** | Convert natural language to SQL queries and execute them, returning structured data results
+
+Core flow: Natural Language → SQL Generation → Data Query → Results
+
+### `/generate-chart` - Smart Chart Generation
+**POST** | Generate visualization charts automatically based on data queries, supporting multiple chart types
+
+Core flow: Natural Language → SQL Generation → Data Query → Chart Generation
+
+## 🎯 Getting Started
+
+1. **Get API Key** - Contact us to obtain your access key
+2. **Choose Endpoint** - Select the appropriate API endpoint for your needs
+3. **Send Request** - Build requests using JSON format
+4. **Handle Response** - Process streaming or standard responses based on your requirements
+
+> For detailed parameter descriptions and examples, please check the specific endpoint pages in the left sidebar.

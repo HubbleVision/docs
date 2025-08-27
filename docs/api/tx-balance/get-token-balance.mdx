@@ -1,0 +1,129 @@
+---
+id: get-token-balance
+title: "Token Balance API"
+description: "Get token balance for wallet address and token contract"
+sidebar_label: "Token Balance"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import { ApiPlaygroundButton } from '@site/src/components/ApiPlaygroundModal';
+import ResponseTabs from '@site/src/components/ResponseTabs';
+
+# Token Balance API
+
+Query token balance information for any Solana wallet address and token combination, including SPL tokens and native SOL.
+
+<div className="api-header">
+  <div className="api-info">
+    <span className="api-method">POST</span>
+    <span className="api-path">/balance/api/v1/sol/balance</span>
+  </div>
+  <ApiPlaygroundButton 
+    initialApi="tx" 
+    initialEndpoint="balance"
+    className="api-try-button"
+  >
+    Try it ▶
+  </ApiPlaygroundButton>
+</div>
+
+## Request Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `walletAddress` | string | <span class="required">Yes</span> | Solana wallet address to query |
+| `tokenAddress` | string | <span class="required">Yes</span> | Token contract address (mint address) |
+
+## Supported Tokens
+
+Query balance for any token on Solana:
+
+- **Native SOL** - Use `So11111111111111111111111111111111111111112`
+- **SPL Tokens** - Any SPL token mint address
+- **Popular Tokens** - USDC, USDT, RAY, SRM, and more
+- **Custom Tokens** - Any valid token contract address
+
+## Response Format
+
+```json
+{
+  "walletAddress": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "tokenAddress": "So11111111111111111111111111111111111111112",
+  "balance": "1250000000",
+  "decimals": 9,
+  "uiAmount": 1.25,
+  "symbol": "SOL",
+  "timestamp": "2024-01-20T10:30:00Z"
+}
+```
+
+### Response Fields
+
+- **balance** - Raw token amount (smallest unit)
+- **decimals** - Token decimal places
+- **uiAmount** - Human-readable amount (balance / 10^decimals)
+- **symbol** - Token symbol if available
+
+## Code Examples
+
+<Tabs>
+  <TabItem value="curl" label="cURL">
+
+```bash
+curl -X POST "https://api.hubble-rpc.xyz/balance/api/v1/sol/balance" \
+  -H "Content-Type: application/json" \
+  -H "HUBBLE-API-KEY: your-api-key" \
+  -d '{
+    "walletAddress": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+    "tokenAddress": "So11111111111111111111111111111111111111112"
+  }'
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const response = await fetch('https://api.hubble-rpc.xyz/balance/api/v1/sol/balance', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    walletAddress: '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM',
+    tokenAddress: 'So11111111111111111111111111111111111111112'
+  })
+});
+
+const data = await response.json();
+console.log(`Balance: ${data.uiAmount} ${data.symbol}`);
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+
+url = "https://api.hubble-rpc.xyz/balance/api/v1/sol/balance"
+headers = {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+}
+data = {
+    "walletAddress": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+    "tokenAddress": "So11111111111111111111111111111111111111112"
+}
+
+response = requests.post(url, json=data, headers=headers)
+result = response.json()
+print(f"Balance: {result['uiAmount']} {result['symbol']}")
+```
+
+  </TabItem>
+</Tabs>
+
+## Responses
+
+<ResponseTabs apiId="tx" endpointId="balance" />

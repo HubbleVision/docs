@@ -1,0 +1,43 @@
+.responseDescription {
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: var(--ifm-color-content);
+}
+
+.responseCode {
+  background-color: var(--ifm-code-background);
+  color: var(--ifm-color-content);
+  padding: 16px;
+  border-radius: 6px;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.45;
+  font-family: var(--ifm-font-family-monospace);
+  border: 1px solid var(--ifm-color-border);
+}
+
+.responseCode code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.noResponses {
+  padding: 16px;
+  text-align: center;
+  color: var(--ifm-color-content-secondary);
+  font-style: italic;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .responseCode {
+  background-color: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-border);
+}
+
+[data-theme="dark"] .responseCode code {
+  color: var(--ifm-color-content);
+}
