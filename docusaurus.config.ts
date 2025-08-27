@@ -133,7 +133,7 @@ const config: Config = {
       },
       items: [
         {
-          to: "/api/overview",
+          to: "/getting-started/quick-start",
           position: "left",
           label: "API Overview",
         },

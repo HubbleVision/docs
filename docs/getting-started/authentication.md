@@ -23,4 +23,3 @@ Content-Type: application/json
 ---
 
 - [Quick Start](./quick-start)
-- [API Reference](/api/overview)

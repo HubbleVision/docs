@@ -28,4 +28,4 @@ curl -X POST 'https://api.hubble-rpc.xyz/tx/api/v1/sol/tx' \
 
 ## Next steps
 
-- 🔍 [Browse full API docs](/api/overview)
+- 🔍 Browse the sidebar for complete API documentation
