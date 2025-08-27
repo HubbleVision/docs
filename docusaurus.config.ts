@@ -132,11 +132,6 @@ const config: Config = {
         src: "img/logo.svg",
       },
       items: [
-        {
-          to: "/getting-started/quick-start",
-          position: "left",
-          label: "API Overview",
-        },
         // {
         //   type: "localeDropdown",
         //   position: "right",
