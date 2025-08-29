@@ -102,6 +102,7 @@ export default function ApiPlayground({
         return;
       }
       const init: RequestInit = { method, headers };
+      console.log({ init });
       if (method !== "GET" && bodyText) {
         init.body = bodyText;
         if (!headers["Content-Type"]) {
@@ -300,9 +301,7 @@ export default function ApiPlayground({
             <span>📤</span>
             Response
           </div>
-          {statusLine && (
-            <div className={styles.statusLine}>{statusLine}</div>
-          )}
+          {statusLine && <div className={styles.statusLine}>{statusLine}</div>}
           {respHeaders && (
             <details className={styles.details}>
               <summary>📋 Response Headers</summary>
@@ -315,7 +314,8 @@ export default function ApiPlayground({
                 <div className={styles.emptyIcon}>💭</div>
                 <div className={styles.emptyTitle}>Waiting for Response</div>
                 <div className={styles.emptySubtitle}>
-                  Click the "Send" button to send a request and view the response
+                  Click the "Send" button to send a request and view the
+                  response
                 </div>
               </div>
             )}
@@ -328,7 +328,9 @@ export default function ApiPlayground({
             {respBody && !loading && (
               <div className={styles.responseContent}>
                 <div className={styles.responseHeader}>
-                  <span className={styles.responseLabel}>📄 Response Content</span>
+                  <span className={styles.responseLabel}>
+                    📄 Response Content
+                  </span>
                   <button
                     className={styles.copyButton}
                     onClick={() => navigator.clipboard.writeText(respBody)}

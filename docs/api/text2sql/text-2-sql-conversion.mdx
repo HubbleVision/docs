@@ -1,8 +1,8 @@
 ---
 id: text-2-sql-conversion
-title: "Text2SQL Conversion API"
+title: "Agent API"
 description: "Convert natural language queries to SQL and execute"
-sidebar_label: "Text2SQL Conversion"
+sidebar_label: "Agent"
 ---
 
 import Tabs from '@theme/Tabs';
@@ -49,27 +49,53 @@ The system automatically analyzes your natural language query and generates corr
 
 ```json
 {
-  "data": [
-    {"token": "SOL", "volume": 1500000.50, "date": "2024-01-20"},
-    {"token": "ETH", "volume": 2500000.75, "date": "2024-01-20"}
-  ],
-  "sql": "SELECT token, volume, date FROM trades WHERE date = CURRENT_DATE ORDER BY volume DESC LIMIT 10",
-  "timestamp": "2024-01-20T10:30:00Z"
+  "data": {
+    "sql": "SELECT ...",
+    "rows": [
+      {"token": "ABC", "volume": 12345},
+      {"token": "XYZ", "volume": 67890}
+    ]
+  }
 }
 ```
 
-### Streaming Response Event Types
+### Streaming Response (stream: true)
 
-| Event Type | Description |
-|------------|-------------|
-| `workflow_start` | Workflow execution started |
-| `node_execution` | Node is executing |
-| `plan_created` | Execution plan created |
-| `step_completed` | Step execution completed |
-| `llm_start` / `token` / `llm_end` | LLM generation process |
-| `result` | Final result |
-| `complete` | Entire process completed |
-| `error` | Execution error |
+**SSE Streaming Events** - Each event is sent as a single line with Server-Sent Events format:
+
+#### Recommended Usage with curl
+
+```bash
+curl -N -H "Content-Type: application/json" \
+     -H "HUBBLE-API-KEY: <YOUR_KEY>" \
+     https://api.hubble-rpc.xyz/agent/api/v2/text2sql \
+     -d '{"query":"Show me the top 10 token trades by volume today","stream":true}'
+```
+
+#### Response Format
+
+Each streaming event follows this structure:
+
+```
+data: {"id":"...","phase":"plan","status":"end","message":"plan phase completed","duration":285,"timestamp":"2025-08-21T05:09:29.825Z","plan":["[Query] Get the top 10 token trades by volume from the DEX table for today with time filter and LIMIT 10."]}
+
+data: {"id":"...","phase":"sql_generation","status":"start","message":"sql_generation phase started","timestamp":"2025-08-21T05:09:29.826Z"}
+
+data: {"id":"...","phase":"sql_generation","status":"end","message":"sql_generation phase completed","duration":2666,"timestamp":"2025-08-21T05:09:32.492Z","rowCount":10}
+
+data: {"id":"...","phase":"data_display","status":"start","message":"data_display phase started","timestamp":"2025-08-21T05:09:32.492Z"}
+```
+
+### Event Types (Streaming)
+
+| Event Name | Description | Commonly Used |
+|------------|-------------|---------------|
+| `token` | LLM real-time generated tokens (streaming output content) | ✅ Common |
+| `result` | Final query result | ✅ Common |
+| `complete` | Entire process completed | ✅ Common |
+| `error` | Error occurred | ✅ Common |
+
+**Recommendation for developers:** Focus mainly on `token`, `result`, `complete`, and `error` events.
 
 ## Code Examples
 
@@ -77,7 +103,7 @@ The system automatically analyzes your natural language query and generates corr
   <TabItem value="curl" label="cURL">
 
 ```bash
-curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/text2sql" \
+curl -X POST "https://api.hubble-rpc.xyz/agent/api/v2/text2sql" \
   -H "Content-Type: application/json" \
   -H "HUBBLE-API-KEY: your-api-key" \
   -d '{
@@ -90,54 +116,39 @@ curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/text2sql" \
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-// Streaming response
-const response = await fetch('/agent/api/v1/text2sql', {
-  method: 'POST',
-  headers: { 
-    'Content-Type': 'application/json',
-    'HUBBLE-API-KEY': 'your-api-key'
-  },
-  body: JSON.stringify({ 
-    query: 'Show me the top 10 token trades by volume today',
-    stream: true // default value
-  })
-});
-
-const reader = response.body.getReader();
-// Process streaming data...
-
-// Standard response
-const data = await fetch('/agent/api/v1/text2sql', {
-  method: 'POST',
-  headers: { 
-    'Content-Type': 'application/json',
-    'HUBBLE-API-KEY': 'your-api-key'
-  },
-  body: JSON.stringify({ 
-    query: 'Show me the top 10 token trades by volume today',
-    stream: false
-  })
-}).then(res => res.json());
-```
-
-  </TabItem>
-  <TabItem value="python" label="Python">
-
-```python
-import requests
-
-url = "https://api.hubble-rpc.xyz/agent/api/v1/text2sql"
-headers = {
+// Fetch + JSON (Non-streaming)
+fetch("/agent/api/v2/text2sql", {
+  method: "POST",
+  headers: {
     "Content-Type": "application/json",
     "HUBBLE-API-KEY": "your-api-key"
-}
-data = {
-    "query": "Show me the top 10 token trades by volume today",
-    "stream": False
-}
+  },
+  body: JSON.stringify({
+    query: "Show me the top 10 token trades by volume today",
+    stream: false
+  })
+}).then(res => res.json()).then(console.log);
 
-response = requests.post(url, json=data, headers=headers)
-result = response.json()
+// Fetch + SSE (Streaming)
+fetch("/agent/api/v2/text2sql", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+  },
+  body: JSON.stringify({
+    query: "Show me the top 10 token trades by volume today",
+    stream: true
+  })
+}).then(async response => {
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    console.log(decoder.decode(value));
+  }
+});
 ```
 
   </TabItem>

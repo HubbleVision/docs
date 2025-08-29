@@ -11,7 +11,7 @@ type ApiKeyHeader = "HUBBLE-API-KEY";
 type ResponseExample = {
   statusCode: number;
   description: string;
-  body: object;
+  body: object | string;
 };
 
 type RequestParameter = {
@@ -74,7 +74,7 @@ export const API_CONFIGS: ApiConfig[] = [
             name: "query",
             type: "string",
             required: true,
-            description: "Natural language query to convert to SQL"
+            description: "Natural language query to convert to SQL, like 'Show me the top 10 token trades by volume today'"
           },
           {
             name: "stream",
@@ -87,38 +87,43 @@ export const API_CONFIGS: ApiConfig[] = [
         responses: [
           {
             statusCode: 200,
-            description: "Query executed successfully",
+            description: "Success (stream: false)",
             body: {
+              id: "2dcc91df-6296-47ce-90b2-4a3e0b8b354c",
+              status: "complete",
+              query: "Show me the top 10 token trades by volume today",
+              sql: "SELECT token_name, SUM(volume) as volume ... LIMIT 10",
               data: [
-                { token: "SOL", volume: 1500000.50, date: "2024-01-20" },
-                { token: "ETH", volume: 2500000.75, date: "2024-01-20" }
+                {"token_name": "Giggles", "volume": "5344877.3 SOL"},
+                {"token_name": "DubX on SOL", "volume": "4183920.3 SOL"},
+                {"token_name": "Polycule", "volume": "3304656.1 SOL"}
               ],
-              sql: "SELECT token, volume, date FROM trades WHERE date = CURRENT_DATE ORDER BY volume DESC LIMIT 10",
-              timestamp: "2024-01-20T10:30:00Z"
+              rowCount: 10,
+              duration: 2700,
+              timestamp: "2025-08-21T05:09:32.492Z"
             }
+          },
+          {
+            statusCode: 200,
+            description: "Success (stream: true)",
+            body: `data: {"id":"...","phase":"plan","status":"start","message":"plan phase started",...}
+data: {"id":"...","phase":"plan","status":"end","message":"plan phase completed","plan":["..."]}
+data: {"id":"...","phase":"sql_generation","status":"start",...}
+data: {"id":"...","phase":"sql_generation","status":"end","rowCount":10}
+data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...}`
           },
           {
             statusCode: 400,
-            description: "Bad Request - Invalid parameters",
+            description: "Bad Request",
             body: {
-              error: "Query parameter cannot be empty",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
-          },
-          {
-            statusCode: 401,
-            description: "Unauthorized - Invalid API key",
-            body: {
-              error: "Invalid or missing API key",
-              timestamp: "2024-01-20T10:30:00Z"
+              error: "Missing required field: query"
             }
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
-              error: "SQL generation failed, please try again later",
-              timestamp: "2024-01-20T10:30:00Z"
+              error: "Database connection failed"
             }
           }
         ]
