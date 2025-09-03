@@ -18,7 +18,7 @@ Converts natural language queries to SQL, executes the query, and automatically 
 <div className="api-header">
   <div className="api-info">
     <span className="api-method">POST</span>
-    <span className="api-path">/agent/api/v1/generate-chart</span>
+    <span className="api-path">/agent/api/v2/generate-chart</span>
   </div>
   <ApiPlaygroundButton 
     initialApi="text2sql" 
@@ -84,7 +84,7 @@ The system automatically analyzes your data and query to select the most suitabl
   <TabItem value="curl" label="cURL">
 
 ```bash
-curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/generate-chart" \
+curl -X POST "https://api.hubble-rpc.xyz/agent/api/v2/generate-chart" \
   -H "Content-Type: application/json" \
   -H "HUBBLE-API-KEY: your-api-key" \
   -d '{
@@ -98,7 +98,7 @@ curl -X POST "https://api.hubble-rpc.xyz/agent/api/v1/generate-chart" \
 
 ```javascript
 // Streaming response
-const response = await fetch('/agent/api/v1/generate-chart', {
+const response = await fetch('/agent/api/v2/generate-chart', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const reader = response.body.getReader();
 // Process streaming data...
 
 // Standard response
-const data = await fetch('/agent/api/v1/generate-chart', {
+const data = await fetch('/agent/api/v2/generate-chart', {
   method: 'POST',
   headers: { 
     'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ const data = await fetch('/agent/api/v1/generate-chart', {
 ```python
 import requests
 
-url = "https://api.hubble-rpc.xyz/agent/api/v1/generate-chart"
+url = "https://api.hubble-rpc.xyz/agent/api/v2/generate-chart"
 headers = {
     "Content-Type": "application/json",
     "HUBBLE-API-KEY": "your-api-key"
