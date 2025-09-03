@@ -53,7 +53,7 @@ export const API_CONFIGS: ApiConfig[] = [
         id: "health-check",
         label: "GET /status",
         method: "GET",
-        path: "/v1/status",
+        path: "/v2/status",
         description: "Health check",
         sampleBody: null,
         requestParameters: [],
@@ -132,7 +132,7 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
         id: "generate-chart",
         label: "POST /generate-chart",
         method: "POST",
-        path: "/v1/generate-chart",
+        path: "/v2/generate-chart",
         description:
           "Natural language to SQL to execution with automatic chart selection",
         sampleBody: {
