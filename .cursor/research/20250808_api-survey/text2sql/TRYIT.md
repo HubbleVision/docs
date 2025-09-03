@@ -8,7 +8,7 @@
 
 ### 非流式 JSON
 ```bash
-curl -X POST 'https://api.hubble-rpc.xyz/agent/api/v1/text2sql' \
+curl -X POST 'https://api.hubble-rpc.xyz/agent/api/v2/text2sql' \
   -H 'Content-Type: application/json' \
   -H 'HUBBLE-API-KEY: YOUR_KEY' \
   -d '{
@@ -19,7 +19,7 @@ curl -X POST 'https://api.hubble-rpc.xyz/agent/api/v1/text2sql' \
 
 ### 流式 SSE
 ```bash
-curl -N -X POST 'https://api.hubble-rpc.xyz/agent/api/v1/text2sql' \
+curl -N -X POST 'https://api.hubble-rpc.xyz/agent/api/v2/text2sql' \
   -H 'Content-Type: application/json' \
   -H 'HUBBLE-API-KEY: YOUR_KEY' \
   -d '{

@@ -46,14 +46,14 @@ export const API_CONFIGS: ApiConfig[] = [
   {
     id: "text2sql",
     label: "Text2SQL",
-    baseUrl: "https://api.hubble-rpc.xyz/agent/api/v1",
+    baseUrl: "https://api.hubble-rpc.xyz/agent/api",
     apiKeyHeader: "HUBBLE-API-KEY",
     endpoints: [
       {
         id: "health-check",
         label: "GET /status",
         method: "GET",
-        path: "/status",
+        path: "/v1/status",
         description: "Health check",
         sampleBody: null,
         requestParameters: [],
@@ -62,7 +62,7 @@ export const API_CONFIGS: ApiConfig[] = [
         id: "text2sql-conversion",
         label: "POST /text2sql",
         method: "POST",
-        path: "/text2sql",
+        path: "/v2/text2sql",
         description: "Natural language to SQL to execution to results",
         sampleBody: {
           query: "Show me the top 10 token trades by volume today",
@@ -132,7 +132,7 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
         id: "generate-chart",
         label: "POST /generate-chart",
         method: "POST",
-        path: "/generate-chart",
+        path: "/v1/generate-chart",
         description:
           "Natural language to SQL to execution with automatic chart selection",
         sampleBody: {
@@ -379,8 +379,8 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
         path: "/balance/api/v1/sol/balance",
         description: "Get balance for a wallet address/token",
         sampleBody: {
-          walletAddress: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
-          tokenAddress: "So11111111111111111111111111111111111111112",
+          walletAddress: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+          tokenAddress: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
         },
         requestParameters: [
           {
@@ -401,8 +401,8 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             statusCode: 200,
             description: "Balance retrieved successfully",
             body: {
-              walletAddress: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
-              tokenAddress: "So11111111111111111111111111111111111111112",
+              walletAddress: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+              tokenAddress: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
               balance: "1250000000",
               decimals: 9,
               uiAmount: 1.25,

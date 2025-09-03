@@ -276,7 +276,7 @@ code[class*="language-"],
 /* 2. Visual hierarchy lines for nested items */
 .theme-doc-sidebar-container .menu__list .menu__list {
   position: relative;
-  border-left: 2px solid rgba(255, 255, 255, 0.2); /* 降低透明度的白色线条 */
+  border-left: 1px solid #ffffff30 !important; /* 提高透明度的白色线条 */
   margin-left: 12px;
   padding-left: 8px;
 }
@@ -581,4 +581,41 @@ nav[aria-label="breadcrumbs"],
     justify-content: center;
   }
 }
+
+/* Coming Soon Sidebar Items */
+.menu__link.coming-soon-item {
+  color: var(--hubble-text-secondary) !important;
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+.menu__link.coming-soon-item:hover {
+  background-color: transparent !important;
+  color: var(--hubble-text-secondary) !important;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
+/* Navbar Logo Size Customization */
+.navbar__logo img {
+  height: 18px !important; /* Adjust this value to your desired size */
+  width: auto !important;  /* Maintains aspect ratio */
+}
+
+/* Navbar Title Color */
+.navbar__title {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+/* Alternative: Set specific width and height */
+/* 
+.navbar__logo img {
+  height: 40px !important;
+  width: 40px !important;
+}
+*/
 

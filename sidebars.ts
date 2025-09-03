@@ -17,32 +17,42 @@ const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     {
       type: "doc",
-      id: "intro",
-      label: "Introduction",
+      id: "overview",
+      label: "Overview",
     },
+
     {
-      type: "doc",
-      id: "getting-started/quick-start", 
-      label: "Quick Start",
+      type: "category",
+      label: "Data Catalog",
+      collapsed: false,
+      items: [
+        {
+          type: "doc",
+          id: "data-catalog/solana-data-coverage",
+          label: "Solana Data Coverage",
+        },
+      ],
     },
+
     {
       type: "category",
       label: "API Docs",
+      collapsed: false,
       items: [
         {
           type: "category",
-          label: "Text2SQL",
+          label: "Agent",
+          collapsed: false,
           items: [
-            { type: "doc", id: "api/text2sql/index", label: "Overview" },
-            { type: "doc", id: "api/text2sql/health-check", label: "/status" },
+            { type: "doc", id: "api/agent/health-check", label: "/status" },
             {
               type: "doc",
-              id: "api/text2sql/text-2-sql-conversion",
+              id: "api/agent/text2sql",
               label: "/text2sql",
             },
             {
               type: "doc",
-              id: "api/text2sql/chart-generation",
+              id: "api/agent/text2chart",
               label: "/generate-chart",
             },
           ],
@@ -50,6 +60,7 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Transaction/Balance",
+          collapsed: false,
           items: [
             {
               type: "doc",
@@ -66,6 +77,7 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "OHLCV",
+          collapsed: false,
           items: [
             {
               type: "doc",
@@ -73,6 +85,36 @@ const sidebars: SidebarsConfig = {
               label: "/sol/candle",
             },
           ],
+        },
+        {
+          type: "doc",
+          id: "api/holders/index",
+          label: "Holders (Soon)",
+          className: "coming-soon-item",
+        },
+        {
+          type: "doc",
+          id: "api/launchpad/index",
+          label: "Launchpad (Soon)",
+          className: "coming-soon-item",
+        },
+        {
+          type: "doc",
+          id: "api/tokeninfo/index",
+          label: "Tokeninfo (Soon)",
+          className: "coming-soon-item",
+        },
+        {
+          type: "doc",
+          id: "api/wallet-pnl/index",
+          label: "Wallet PnL (Soon)",
+          className: "coming-soon-item",
+        },
+        {
+          type: "doc",
+          id: "api/transfer/index",
+          label: "Transfer (Soon)",
+          className: "coming-soon-item",
         },
       ],
     },

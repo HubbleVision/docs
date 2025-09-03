@@ -5,7 +5,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: "Hubble API",
+  title: "Hubble",
   tagline: "Powerful Solana blockchain data gateway service",
   favicon: "img/favicon.ico",
 
@@ -33,50 +33,50 @@ const config: Config = {
 
   // i18n removed: site runs in single-language (English) mode
 
-  plugins: [
-    [
-      "docusaurus-plugin-openapi-docs",
-      {
-        id: "api",
-        docsPluginId: "classic",
-        config: {
-          text2sql: {
-            specPath: "static/api/text2sql.openapi.json",
-            outputDir: "docs/api/text2sql",
-            sidebarOptions: {
-              groupPathsBy: "tag",
-              categoryLinkSource: "tag",
-            },
-            downloadUrl: "/api/text2sql.openapi.json",
-            hideSendButton: false,
-            showSchemas: true,
-          },
-          txBalance: {
-            specPath: "static/api/solana-data-api.swagger.json",
-            outputDir: "docs/api/tx-balance",
-            sidebarOptions: {
-              groupPathsBy: "tag",
-              categoryLinkSource: "tag",
-            },
-            downloadUrl: "/api/solana-data-api.swagger.json",
-            hideSendButton: false,
-            showSchemas: true,
-          },
-          ohlcv: {
-            specPath: "static/api/solana-candle-api.swagger.json",
-            outputDir: "docs/api/ohlcv",
-            sidebarOptions: {
-              groupPathsBy: "tag",
-              categoryLinkSource: "tag",
-            },
-            downloadUrl: "/api/solana-candle-api.swagger.json",
-            hideSendButton: false,
-            showSchemas: true,
-          },
-        },
-      },
-    ],
-  ],
+  // plugins: [
+  //   [
+  //     "docusaurus-plugin-openapi-docs",
+  //     {
+  //       id: "api",
+  //       docsPluginId: "classic",
+  //       config: {
+  //         text2sql: {
+  //           specPath: "static/api/text2sql.openapi.json",
+  //           outputDir: "docs/api/text2sql",
+  //           sidebarOptions: {
+  //             groupPathsBy: "tag",
+  //             categoryLinkSource: "tag",
+  //           },
+  //           downloadUrl: "/api/text2sql.openapi.json",
+  //           hideSendButton: false,
+  //           showSchemas: true,
+  //         },
+  //         txBalance: {
+  //           specPath: "static/api/solana-data-api.swagger.json",
+  //           outputDir: "docs/api/tx-balance",
+  //           sidebarOptions: {
+  //             groupPathsBy: "tag",
+  //             categoryLinkSource: "tag",
+  //           },
+  //           downloadUrl: "/api/solana-data-api.swagger.json",
+  //           hideSendButton: false,
+  //           showSchemas: true,
+  //         },
+  //         ohlcv: {
+  //           specPath: "static/api/solana-candle-api.swagger.json",
+  //           outputDir: "docs/api/ohlcv",
+  //           sidebarOptions: {
+  //             groupPathsBy: "tag",
+  //             categoryLinkSource: "tag",
+  //           },
+  //           downloadUrl: "/api/solana-candle-api.swagger.json",
+  //           hideSendButton: false,
+  //           showSchemas: true,
+  //         },
+  //       },
+  //     },
+  //   ],
+  // ],
 
   presets: [
     [
@@ -126,7 +126,7 @@ const config: Config = {
     },
     breadcrumbs: false,
     navbar: {
-      title: "Hubble API",
+      title: "Hubble",
       logo: {
         alt: "Hubble Logo",
         src: "img/logo.svg",
@@ -151,7 +151,7 @@ const config: Config = {
         //   items: [
         //     {
         //       label: "Docs",
-        //       to: "/intro",
+        //       to: "/overview",
         //     },
         //   ],
         // },
