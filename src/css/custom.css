@@ -226,7 +226,7 @@ code[class*="language-"],
 .theme-doc-sidebar-container summary .icon,
 .theme-doc-sidebar-container summary svg,
 .theme-doc-sidebar-container summary svg path {
-  background-color: #000000 !important; /* black square */
+  background-color: #000000 !important; 
   color: #ffffff !important; /* white icon */
   fill: #ffffff !important;
   stroke: #ffffff !important;
@@ -238,30 +238,139 @@ code[class*="language-"],
   border: none !important;
 }
 
-/* Sidebar caret fixes: masked icon should be white on black bg */
+/* ========== ENHANCED SIDEBAR HIERARCHY STYLES ========== */
+
+/* 1. Sidebar caret/expand indicators - make them more visible */
 .theme-doc-sidebar-container .menu__caret,
 .theme-doc-sidebar-container .menu__caret::before {
-  background-color: transparent !important; /* no square background */
+  background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
 }
-/* Docusaurus uses a masked pseudo-element for the arrow; its background-color is the icon color */
+
+/* Enhanced triangle arrow indicator for expandable items */
 .theme-doc-sidebar-container .menu__link--sublist:after {
-  background-color: #ffffff !important; /* white icon */
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #ffffff !important; /* 更大的三角形，始终可见 */
+  border-top: 6px solid transparent !important;
+  border-bottom: 6px solid transparent !important;
+  transform: translateY(-50%);
+  transform-origin: 3px center; /* 设置旋转中心点 */
+  transition: transform 0.3s ease, border-left-color 0.2s ease;
+  background: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  z-index: 10;
 }
 
-/* Sidebar sublist arrow: use mask icon in white, no square bg */
-.theme-doc-sidebar-container .menu__link--sublist:after {
-  background: none !important; /* remove grey svg background-image */
-  -webkit-mask-image: var(--ifm-menu-link-sublist-icon);
-  mask-image: var(--ifm-menu-link-sublist-icon);
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 1rem 1rem;
-  mask-size: 1rem 1rem;
-  background-color: #ffffff !important; /* arrow color */
+/* Hover effect for triangle indicators */
+.theme-doc-sidebar-container .menu__link--sublist:hover:after {
+  border-left-color: var(--ifm-color-primary) !important; /* 悬停时使用主色 */
+}
+
+/* 2. Visual hierarchy lines for nested items */
+.theme-doc-sidebar-container .menu__list .menu__list {
+  position: relative;
+  border-left: 2px solid rgba(255, 255, 255, 0.2); /* 降低透明度的白色线条 */
+  margin-left: 12px;
+  padding-left: 8px;
+}
+
+/* 移除子项前面的小横线 */
+
+/* 3. Enhanced spacing and visual distinction for different levels */
+.theme-doc-sidebar-container .menu__list-item {
+  margin: 2px 0;
+}
+
+/* Top-level items styling */
+.theme-doc-sidebar-container > .menu > .menu__list > .menu__list-item {
+  margin: 8px 0;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+/* 移除顶级菜单项hover背景色效果 */
+
+/* Category headers (collapsible sections) - same styling as regular links */
+.theme-doc-sidebar-container .menu__link--sublist {
+  padding: 8px 16px !important;
+  margin: 2px 0 !important;
+  border-radius: 6px !important;
+  transition: color 0.2s ease !important;
+  position: relative;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  color: var(--hubble-text-secondary) !important;
+}
+
+/* Nested category headers (inside categories) - more specific selector */
+.theme-doc-sidebar-container .menu__list .menu__list .menu__link--sublist {
+  padding: 4px 0 4px 4px !important; /* top right bottom left - 覆盖上面的padding */
+}
+
+.theme-doc-sidebar-container .menu__link--sublist:hover {
+  color: var(--hubble-text-primary) !important;
+}
+
+/* Regular doc links */
+.theme-doc-sidebar-container .menu__link:not(.menu__link--sublist) {
+  padding: 8px 16px !important;
+  margin: 2px 0 !important;
+  border-radius: 6px !important;
+  transition: color 0.2s ease !important;
+  font-size: 14px !important;
+}
+
+/* Nested doc links (inside categories) */
+.theme-doc-sidebar-container .menu__list .menu__list .menu__link:not(.menu__link--sublist) {
+  padding: 4px 0 4px 4px !important; /* top right bottom left */
+  margin: 1px 0 !important;
+  font-size: 13px !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* 这个规则已经被上面更具体的hover规则覆盖，移除transform避免冲突 */
+
+/* Active state enhancements */
+.theme-doc-sidebar-container .menu__link--active {
+  background-color: rgba(4, 249, 210, 0.15) !important;
+  color: var(--ifm-color-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* 4. Triangle rotation for expand/collapse states */
+.theme-doc-sidebar-container .menu__list-item--collapsed .menu__link--sublist:after {
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.theme-doc-sidebar-container .menu__list-item:not(.menu__list-item--collapsed) .menu__link--sublist:after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* 5. 移除所有border效果 */
+
+.theme-doc-sidebar-container .menu__link:hover {
+  color: var(--hubble-text-primary) !important;
+}
+
+/* 嵌套菜单项hover效果 - 只保留颜色高亮 */
+.theme-doc-sidebar-container .menu__list .menu__list .menu__link:hover {
+  color: var(--hubble-text-primary) !important;
+}
+
+/* 6. Improved spacing for better readability */
+.theme-doc-sidebar-container .menu__list {
+  padding: 4px 0;
+}
+
+.theme-doc-sidebar-container > .menu > .menu__list {
+  padding: 16px 0;
 }
 
 /* Breadcrumbs separators */
