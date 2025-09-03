@@ -18,7 +18,7 @@ Check if the Text2SQL service is running normally and return service status info
 <div className="api-header">
   <div className="api-info">
     <span className="api-method">GET</span>
-    <span className="api-path">/agent/api/v1/status</span>
+    <span className="api-path">/agent/api/v2/status</span>
   </div>
   <ApiPlaygroundButton 
     initialApi="text2sql" 
@@ -57,7 +57,7 @@ Check if the Text2SQL service is running normally and return service status info
   <TabItem value="curl" label="cURL">
 
 ```bash
-curl -X GET "https://api.hubble-rpc.xyz/agent/api/v1/status" \
+curl -X GET "https://api.hubble-rpc.xyz/agent/api/v2/status" \
   -H "HUBBLE-API-KEY: your-api-key"
 ```
 
@@ -65,7 +65,7 @@ curl -X GET "https://api.hubble-rpc.xyz/agent/api/v1/status" \
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const response = await fetch('/agent/api/v1/status', {
+const response = await fetch('/agent/api/v2/status', {
   method: 'GET',
   headers: { 
     'HUBBLE-API-KEY': 'your-api-key'
@@ -82,7 +82,7 @@ console.log(data);
 ```python
 import requests
 
-url = "https://api.hubble-rpc.xyz/agent/api/v1/status"
+url = "https://api.hubble-rpc.xyz/agent/api/v2/status"
 headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
