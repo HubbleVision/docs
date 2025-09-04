@@ -74,15 +74,16 @@ export const API_CONFIGS: ApiConfig[] = [
             name: "query",
             type: "string",
             required: true,
-            description: "Natural language query to convert to SQL, like 'Show me the top 10 token trades by volume today'"
+            description:
+              "Natural language query to convert to SQL, like 'Show me the top 10 token trades by volume today'",
           },
           {
             name: "stream",
             type: "boolean",
             required: false,
             description: "Whether to return streaming response",
-            defaultValue: "true"
-          }
+            defaultValue: "true",
+          },
         ],
         responses: [
           {
@@ -94,14 +95,14 @@ export const API_CONFIGS: ApiConfig[] = [
               query: "Show me the top 10 token trades by volume today",
               sql: "SELECT token_name, SUM(volume) as volume ... LIMIT 10",
               data: [
-                {"token_name": "Giggles", "volume": "5344877.3 SOL"},
-                {"token_name": "DubX on SOL", "volume": "4183920.3 SOL"},
-                {"token_name": "Polycule", "volume": "3304656.1 SOL"}
+                { token_name: "Giggles", volume: "5344877.3 SOL" },
+                { token_name: "DubX on SOL", volume: "4183920.3 SOL" },
+                { token_name: "Polycule", volume: "3304656.1 SOL" },
               ],
               rowCount: 10,
               duration: 2700,
-              timestamp: "2025-08-21T05:09:32.492Z"
-            }
+              timestamp: "2025-08-21T05:09:32.492Z",
+            },
           },
           {
             statusCode: 200,
@@ -110,23 +111,23 @@ export const API_CONFIGS: ApiConfig[] = [
 data: {"id":"...","phase":"plan","status":"end","message":"plan phase completed","plan":["..."]}
 data: {"id":"...","phase":"sql_generation","status":"start",...}
 data: {"id":"...","phase":"sql_generation","status":"end","rowCount":10}
-data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...}`
+data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...}`,
           },
           {
             statusCode: 400,
             description: "Bad Request",
             body: {
-              error: "Missing required field: query"
-            }
+              error: "Missing required field: query",
+            },
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
-              error: "Database connection failed"
-            }
-          }
-        ]
+              error: "Database connection failed",
+            },
+          },
+        ],
       },
       {
         id: "generate-chart",
@@ -145,15 +146,15 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             name: "query",
             type: "string",
             required: true,
-            description: "Natural language query"
+            description: "Natural language query",
           },
           {
             name: "stream",
             type: "boolean",
             required: false,
             description: "Whether to return streaming response",
-            defaultValue: "true"
-          }
+            defaultValue: "true",
+          },
         ],
         responses: [
           {
@@ -164,33 +165,38 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
               data: [
                 { date: "2024-01-01", price: 100.5 },
                 { date: "2024-01-02", price: 102.3 },
-                { date: "2024-01-03", price: 98.7 }
+                { date: "2024-01-03", price: 98.7 },
               ],
               chart: {
                 chartType: "line",
-                htmlCode: "<div class=\"chart-container\"><canvas id=\"chart\"></canvas></div>",
+                htmlCode:
+                  '<div class="chart-container"><canvas id="chart"></canvas></div>',
                 previewUrl: "https://charts.hubble-rpc.xyz/preview/abc123",
-                dataInsights: ["Price shows upward trend", "Peak reached on January 15th", "Average daily volume: $2.5M"],
-                generationTime: 1500
+                dataInsights: [
+                  "Price shows upward trend",
+                  "Peak reached on January 15th",
+                  "Average daily volume: $2.5M",
+                ],
+                generationTime: 1500,
               },
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 400,
             description: "Bad Request - Invalid parameters",
             body: {
               error: "Query parameter cannot be empty",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 401,
             description: "Unauthorized - Invalid API key",
             body: {
               error: "Invalid or missing API key",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 429,
@@ -198,18 +204,18 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             body: {
               error: "Rate limit exceeded. Please try again in 60 seconds",
               retryAfter: 60,
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
               error: "Chart generation failed, please try again later",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
-          }
-        ]
+              timestamp: "2024-01-20T10:30:00Z",
+            },
+          },
+        ],
       },
     ],
   },
@@ -235,90 +241,91 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             name: "symbol",
             type: "string",
             required: true,
-            description: "Token symbol (e.g., SOL, ETH)"
+            description: "Token symbol (e.g., SOL, ETH)",
           },
           {
             name: "page",
             type: "number",
             required: false,
             description: "Page number for pagination",
-            defaultValue: "1"
+            defaultValue: "1",
           },
           {
             name: "pageSize",
             type: "number",
             required: false,
             description: "Number of items per page",
-            defaultValue: "20"
+            defaultValue: "20",
           },
           {
             name: "start_time",
             type: "integer",
             required: false,
-            description: "Start time (Unix timestamp in seconds)"
+            description: "Start time (Unix timestamp in seconds)",
           },
           {
             name: "end_time",
             type: "integer",
             required: false,
-            description: "End time (Unix timestamp in seconds)"
+            description: "End time (Unix timestamp in seconds)",
           },
           {
             name: "min_amount",
             type: "number",
             required: false,
-            description: "Minimum transaction amount (in SOL)"
+            description: "Minimum transaction amount (in SOL)",
           },
           {
             name: "max_amount",
             type: "number",
             required: false,
-            description: "Maximum transaction amount (in SOL)"
+            description: "Maximum transaction amount (in SOL)",
           },
           {
             name: "min_value",
             type: "number",
             required: false,
-            description: "Minimum transaction value (in USD)"
+            description: "Minimum transaction value (in USD)",
           },
           {
             name: "max_value",
             type: "number",
             required: false,
-            description: "Maximum transaction value (in USD)"
+            description: "Maximum transaction value (in USD)",
           },
           {
             name: "trader",
             type: "string",
             required: false,
-            description: "Filter by specific trader address"
+            description: "Filter by specific trader address",
           },
           {
             name: "source",
             type: "string",
             required: false,
-            description: "Filter by DEX (Raydium, Pump Fun, Orca, etc.)"
+            description: "Filter by DEX (Raydium, Pump Fun, Orca, etc.)",
           },
           {
             name: "types",
             type: "array",
             required: false,
-            description: "Filter by transaction types (buy, sell, trade, add_liquidity, remove_liquidity)"
+            description:
+              "Filter by transaction types (buy, sell, trade, add_liquidity, remove_liquidity)",
           },
           {
             name: "sort_by",
             type: "string",
             required: false,
             description: "Sort field: time, amount, value",
-            defaultValue: "time"
+            defaultValue: "time",
           },
           {
             name: "sort_order",
             type: "string",
             required: false,
             description: "Sort direction: asc, desc",
-            defaultValue: "desc"
-          }
+            defaultValue: "desc",
+          },
         ],
         responses: [
           {
@@ -334,43 +341,43 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
                   status: "confirmed",
                   amount: 1000000000,
                   from: "Abc123...xyz789",
-                  to: "Def456...uvw012"
-                }
+                  to: "Def456...uvw012",
+                },
               ],
               pagination: {
                 page: 1,
                 pageSize: 20,
                 total: 150,
-                totalPages: 8
+                totalPages: 8,
               },
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 400,
             description: "Bad Request - Invalid parameters",
             body: {
               error: "Invalid symbol or pagination parameters",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 401,
             description: "Unauthorized - Invalid API key",
             body: {
               error: "Invalid or missing API key",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
               error: "Failed to retrieve transaction data",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
-          }
-        ]
+              timestamp: "2024-01-20T10:30:00Z",
+            },
+          },
+        ],
       },
       {
         id: "balance",
@@ -387,14 +394,14 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             name: "walletAddress",
             type: "string",
             required: true,
-            description: "Solana wallet address"
+            description: "Solana wallet address",
           },
           {
             name: "tokenAddress",
             type: "string",
             required: true,
-            description: "Token mint address"
-          }
+            description: "Token mint address",
+          },
         ],
         responses: [
           {
@@ -407,42 +414,43 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
               decimals: 9,
               uiAmount: 1.25,
               symbol: "SOL",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 400,
             description: "Bad Request - Invalid wallet or token address",
             body: {
               error: "Invalid wallet address format",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 401,
             description: "Unauthorized - Invalid API key",
             body: {
               error: "Invalid or missing API key",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 404,
             description: "Token account not found",
             body: {
-              error: "Token account not found for the specified wallet and token",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              error:
+                "Token account not found for the specified wallet and token",
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
               error: "Failed to retrieve balance data",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
-          }
-        ]
+              timestamp: "2024-01-20T10:30:00Z",
+            },
+          },
+        ],
       },
     ],
   },
@@ -468,33 +476,33 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             name: "symbol",
             type: "string",
             required: true,
-            description: "Trading pair symbol (e.g., SOL/USDC)"
+            description: "Trading pair symbol (e.g., SOL/USDC)",
           },
           {
             name: "interval",
             type: "string",
             required: true,
-            description: "Time interval (e.g., 1m, 5m, 1h, 1d)"
+            description: "Time interval (e.g., 1m, 5m, 1h, 1d)",
           },
           {
             name: "limit",
             type: "number",
             required: false,
             description: "Number of candles to return",
-            defaultValue: "100"
+            defaultValue: "100",
           },
           {
             name: "startTime",
             type: "integer",
             required: false,
-            description: "Start time (Unix timestamp in seconds)"
+            description: "Start time (Unix timestamp in seconds)",
           },
           {
             name: "endTime",
             type: "integer",
             required: false,
-            description: "End time (Unix timestamp in seconds)"
-          }
+            description: "End time (Unix timestamp in seconds)",
+          },
         ],
         responses: [
           {
@@ -507,39 +515,39 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
                 {
                   timestamp: 1642680000000,
                   open: 150.25,
-                  high: 151.50,
-                  low: 149.80,
+                  high: 151.5,
+                  low: 149.8,
                   close: 150.75,
-                  volume: 1250000.50
+                  volume: 1250000.5,
                 },
                 {
                   timestamp: 1642680060000,
                   open: 150.75,
-                  high: 152.10,
-                  low: 150.30,
+                  high: 152.1,
+                  low: 150.3,
                   close: 151.25,
-                  volume: 980000.25
-                }
+                  volume: 980000.25,
+                },
               ],
               count: 100,
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 400,
             description: "Bad Request - Invalid parameters",
             body: {
               error: "Invalid symbol format or interval",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 401,
             description: "Unauthorized - Invalid API key",
             body: {
               error: "Invalid or missing API key",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 429,
@@ -547,22 +555,29 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             body: {
               error: "Rate limit exceeded. Please try again in 60 seconds",
               retryAfter: 60,
-              timestamp: "2024-01-20T10:30:00Z"
-            }
+              timestamp: "2024-01-20T10:30:00Z",
+            },
           },
           {
             statusCode: 500,
             description: "Internal Server Error",
             body: {
               error: "Failed to retrieve candle data",
-              timestamp: "2024-01-20T10:30:00Z"
-            }
-          }
-        ]
+              timestamp: "2024-01-20T10:30:00Z",
+            },
+          },
+        ],
       },
     ],
   },
 ];
 
 // 导出类型以供其他文件使用
-export type { HttpMethod, ApiKeyHeader, ResponseExample, RequestParameter, EndpointConfig, ApiConfig };
+export type {
+  HttpMethod,
+  ApiKeyHeader,
+  ResponseExample,
+  RequestParameter,
+  EndpointConfig,
+  ApiConfig,
+};

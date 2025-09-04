@@ -16,9 +16,9 @@ Start here to integrate Hubble AI’s on-chain data and analytics into your work
 
 ## Data Delivery Methods
 
-| API                                                | Stream                                                                                 | MCP (Soon)                                 | Webhooks (Soon)                                 |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------- |
-| Supercharge your use cases and business scenarios. | Queue the latest trade transactions via Confluent Kafka. Contact the team for details. | Agent-friendly tools with flexible setups. | Monitor real-time on-chain events effortlessly. |
+| API                                                | Stream                                                                                                         | MCP (Soon)                                 | Webhooks (Soon)                                 |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------- |
+| Supercharge your use cases and business scenarios. | Queue the latest trade transactions via Confluent Kafka. [Contact the team for details](https://t.me/amy1323). | Agent-friendly tools with flexible setups. | Monitor real-time on-chain events effortlessly. |
 
 ## Data Freshness
 
