@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import { API_CONFIGS } from '@site/api-playground.config';
+import { API_CONFIGS } from '@site/src/config/api-playground.config';
 import styles from './styles.module.css';
 
 interface ResponseTabsProps {

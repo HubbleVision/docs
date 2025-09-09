@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_CONFIGS } from '../../../api-playground.config';
+import { API_CONFIGS } from '../../config/api-playground.config';
 import styles from './styles.module.css';
 
 interface RequestParametersTableProps {

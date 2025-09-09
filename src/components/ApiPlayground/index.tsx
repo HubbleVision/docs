@@ -10,7 +10,7 @@ import {
   API_CONFIGS,
   type HttpMethod,
   type ApiConfig,
-} from "../../../api-playground.config";
+} from "../../config/api-playground.config";
 import CodeExamples from "../CodeExamples";
 
 function pretty(obj: unknown) {
