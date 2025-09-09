@@ -14,6 +14,12 @@ type ResponseExample = {
   body: object | string;
 };
 
+type CodeExample = {
+  language: 'curl' | 'javascript' | 'python';
+  label: string;
+  code: string;
+};
+
 type RequestParameter = {
   name: string;
   type: string;
@@ -32,6 +38,7 @@ type EndpointConfig = {
   supportsStream?: boolean;
   requestParameters?: RequestParameter[];
   responses?: ResponseExample[];
+  codeExamples?: CodeExample[];
 };
 
 type ApiConfig = {
@@ -57,6 +64,41 @@ export const API_CONFIGS: ApiConfig[] = [
         description: "Health check",
         sampleBody: null,
         requestParameters: [],
+        codeExamples: [
+          {
+            language: 'curl',
+            label: 'cURL',
+            code: `curl -X GET "https://api.hubble-rpc.xyz/agent/api/v2/status" \\
+  -H "HUBBLE-API-KEY: your-api-key"`
+          },
+          {
+            language: 'javascript',
+            label: 'JavaScript',
+            code: `const response = await fetch('/agent/api/v2/status', {
+  method: 'GET',
+  headers: { 
+    'HUBBLE-API-KEY': 'your-api-key'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+          },
+          {
+            language: 'python',
+            label: 'Python',
+            code: `import requests
+
+url = "https://api.hubble-rpc.xyz/agent/api/v2/status"
+headers = {
+    "HUBBLE-API-KEY": "your-api-key"
+}
+
+response = requests.get(url, headers=headers)
+result = response.json()
+print(result)`
+          }
+        ],
       },
       {
         id: "text2sql-conversion",
@@ -155,6 +197,93 @@ data: {"id":"...","phase":"data_display","status":"end","data":[{...},{...}],...
             description: "Whether to return streaming response",
             defaultValue: "true",
           },
+        ],
+        codeExamples: [
+          {
+            language: 'curl',
+            label: 'cURL',
+            code: `curl -X POST "https://api.hubble-rpc.xyz/agent/api/v2/generate-chart" \\
+  -H "Content-Type: application/json" \\
+  -H "HUBBLE-API-KEY: your-api-key" \\
+  -d '{
+    "query": "Show token price trends over the last 30 days",
+    "stream": false
+  }'`
+          },
+          {
+            language: 'javascript',
+            label: 'JavaScript',
+            code: `// Standard response
+const response = await fetch('/agent/api/v2/generate-chart', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show token price trends over the last 30 days',
+    stream: false
+  })
+});
+
+const data = await response.json();
+console.log(data);
+
+// Streaming response
+const streamResponse = await fetch('/agent/api/v2/generate-chart', {
+  method: 'POST',
+  headers: { 
+    'Content-Type': 'application/json',
+    'HUBBLE-API-KEY': 'your-api-key'
+  },
+  body: JSON.stringify({ 
+    query: 'Show token price trends over the last 30 days',
+    stream: true
+  })
+});
+
+const reader = streamResponse.body.getReader();
+const decoder = new TextDecoder();
+
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  
+  const chunk = decoder.decode(value);
+  console.log('Received:', chunk);
+}`
+          },
+          {
+            language: 'python',
+            label: 'Python',
+            code: `import requests
+import json
+
+url = "https://api.hubble-rpc.xyz/agent/api/v2/generate-chart"
+headers = {
+    "Content-Type": "application/json",
+    "HUBBLE-API-KEY": "your-api-key"
+}
+data = {
+    "query": "Show token price trends over the last 30 days",
+    "stream": False
+}
+
+response = requests.post(url, json=data, headers=headers)
+result = response.json()
+print(json.dumps(result, indent=2))
+
+# For streaming response
+data_stream = {
+    "query": "Show token price trends over the last 30 days",
+    "stream": True
+}
+
+stream_response = requests.post(url, json=data_stream, headers=headers, stream=True)
+for line in stream_response.iter_lines():
+    if line:
+        print(line.decode('utf-8'))`
+          }
         ],
         responses: [
           {
@@ -580,4 +709,5 @@ export type {
   RequestParameter,
   EndpointConfig,
   ApiConfig,
+  CodeExample,
 };

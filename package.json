@@ -27,6 +27,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-modal": "^3.16.3",
+    "react-shiki": "^0.8.0",
     "swagger-ui-react": "^5.17.14"
   },
   "devDependencies": {

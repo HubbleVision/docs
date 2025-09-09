@@ -11,6 +11,7 @@ import {
   type HttpMethod,
   type ApiConfig,
 } from "../../../api-playground.config";
+import CodeExamples from "../CodeExamples";
 
 function pretty(obj: unknown) {
   try {
@@ -102,7 +103,7 @@ export default function ApiPlayground({
         return;
       }
       const init: RequestInit = { method, headers };
-      console.log({ init });
+      // console.log({ init });
       if (method !== "GET" && bodyText) {
         init.body = bodyText;
         if (!headers["Content-Type"]) {
@@ -171,177 +172,140 @@ export default function ApiPlayground({
 
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
-        {/* <div className={styles.block}>
-          <div className={styles.blockTitle}>Select API</div>
-          <div className={styles.apiTabs}>
-            {API_CONFIGS.map((a) => (
-              <button
-                key={a.id}
-                className={`${styles.apiTab} ${apiId === a.id ? styles.active : ''}`}
-                onClick={() => setApiId(a.id)}
-              >
-                {a.label}
-              </button>
-            ))}
-          </div>
-        </div> */}
-        <div className={styles.block}>
-          <div className={styles.blockTitle}>
-            <span>🔗</span>
-            Endpoint
-          </div>
-          <div className={styles.endpointDropdown}>
-            <div className={styles.customSelectWrapper}>
-              <select
-                value={endpointId}
-                onChange={(e) => setEndpointId(e.target.value)}
-                className={styles.endpointSelect}
-              >
-                {api.endpoints.map((ep) => (
-                  <option key={ep.id} value={ep.id}>
-                    {ep.method} {ep.path}{" "}
-                    {ep.description ? `- ${ep.description}` : ""}
-                  </option>
-                ))}
-              </select>
-              <div className={styles.selectIcon}></div>
-            </div>
-            <div className={styles.endpointPreview}>
-              <div className={styles.endpointPreviewHeader}>
-                <span
-                  className={`${styles.endpointMethod} ${
-                    styles[endpoint.method.toLowerCase()]
-                  }`}
-                >
-                  {endpoint.method === "GET" && "📄"}
-                  {endpoint.method === "POST" && "📝"}
-                  {endpoint.method === "PUT" && "✏️"}
-                  {endpoint.method === "PATCH" && "🔧"}
-                  {endpoint.method === "DELETE" && "🗑️"}
-                  {endpoint.method}
-                </span>
-                <span className={styles.endpointPath}>{endpoint.path}</span>
-              </div>
-              {endpoint.description && (
-                <div className={styles.endpointDescription}>
-                  {endpoint.description}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className={styles.block}>
-          <div className={styles.blockTitle}>
-            <span>🔐</span>
-            Authentication
-          </div>
-          <div className={styles.kvRow}>
-            <div className={styles.kvKey}>{api.apiKeyHeader}</div>
-            <input
-              className={styles.input}
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder={"your-api-key"}
-            />
-          </div>
-        </div>
-        <div className={styles.block}>
-          <div className={styles.blockTitle}>
-            <span>📋</span>
-            Headers (JSON)
-          </div>
-          <textarea
-            className={styles.textarea}
-            value={headersText}
-            onChange={(e) => setHeadersText(e.target.value)}
-          />
-        </div>
+      {/* Request Controls Bar */}
+      <div className={styles.requestBar}>
+        <div className={styles.method}>{method}</div>
+        <input
+          className={styles.urlInput}
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          disabled
+        />
+        <button
+          className={styles.sendBtn}
+          disabled={loading}
+          onClick={sendRequest}
+        >
+          {loading ? "Sending…" : "Send"}
+        </button>
       </div>
 
-      <div className={styles.main}>
-        <div className={styles.row}>
-          <div className={styles.method}>{method}</div>
-          <input
-            className={styles.urlInput}
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            disabled
-          />
-          <button
-            className={styles.sendBtn}
-            disabled={loading}
-            onClick={sendRequest}
-          >
-            {loading ? "Sending…" : "Send"}
-          </button>
+      {/* Main Grid Layout */}
+      <div className={styles.gridContainer}>
+        {/* Left Side - Main Content */}
+        <div className={styles.mainContent}>
+          {/* Request Body */}
+          {method !== "GET" && (
+            <div className={styles.requestBodySection}>
+              <div className={styles.block}>
+                <div className={styles.blockTitle}>
+                  <span>📝</span>
+                  Request Body (JSON)
+                </div>
+                <textarea
+                  className={styles.codeArea}
+                  value={bodyText}
+                  onChange={(e) => setBodyText(e.target.value)}
+                />
+                {endpoint.supportsStream && (
+                  <div className={styles.muted}>
+                    Tip: Text2SQL/Chart will return SSE stream when "stream": true.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Response */}
+          <div className={styles.responseSection}>
+            <div className={styles.prominentBlock}>
+              <div className={styles.prominentBlockTitle}>
+                <span>📤</span>
+                Response
+              </div>
+              {statusLine && <div className={styles.statusLine}>{statusLine}</div>}
+              {respHeaders && (
+                <details className={styles.details}>
+                  <summary>📋 Response Headers</summary>
+                  <pre className={styles.pre}>{respHeaders}</pre>
+                </details>
+              )}
+              <div ref={outputRef} className={styles.responseBox}>
+                {!respBody && !loading && (
+                  <div className={styles.emptyState}>
+                    <div className={styles.emptyIcon}>💭</div>
+                    <div className={styles.emptyTitle}>Waiting for Response</div>
+                    <div className={styles.emptySubtitle}>
+                      Click the "Send" button to send a request and view the
+                      response
+                    </div>
+                  </div>
+                )}
+                {loading && (
+                  <div className={styles.loadingState}>
+                    <div className={styles.loadingSpinner}></div>
+                    <div className={styles.loadingText}>Sending request...</div>
+                  </div>
+                )}
+                {respBody && !loading && (
+                  <div className={styles.responseContent}>
+                    <div className={styles.responseHeader}>
+                      <span className={styles.responseLabel}>
+                        📄 Response Content
+                      </span>
+                      <button
+                        className={styles.copyButton}
+                        onClick={() => navigator.clipboard.writeText(respBody)}
+                        title="Copy response content"
+                      >
+                        📋
+                      </button>
+                    </div>
+                    <pre className={styles.pre}>{respBody}</pre>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Code Examples - Moved below Response */}
+          {endpoint.codeExamples && endpoint.codeExamples.length > 0 && (
+            <div className={styles.codeExamplesSection}>
+              <CodeExamples examples={endpoint.codeExamples} />
+            </div>
+          )}
         </div>
 
-        {method !== "GET" && (
-          <div className={styles.block}>
+        {/* Right Side - Controls */}
+        <div className={styles.sideControls}>
+          {/* Authentication */}
+          <div className={styles.compactBlock}>
             <div className={styles.blockTitle}>
-              <span>📝</span>
-              Body (JSON)
+              <span>🔐</span>
+              Authentication
+            </div>
+            <div className={styles.kvRow}>
+              <div className={styles.kvKey}>{api.apiKeyHeader}</div>
+              <input
+                className={styles.input}
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder={"your-api-key"}
+              />
+            </div>
+          </div>
+
+          {/* Headers */}
+          <div className={styles.compactBlock}>
+            <div className={styles.blockTitle}>
+              <span>📋</span>
+              Headers (JSON)
             </div>
             <textarea
-              className={styles.codeArea}
-              value={bodyText}
-              onChange={(e) => setBodyText(e.target.value)}
+              className={styles.compactTextarea}
+              value={headersText}
+              onChange={(e) => setHeadersText(e.target.value)}
             />
-            {endpoint.supportsStream && (
-              <div className={styles.muted}>
-                Tip: Text2SQL/Chart will return SSE stream when "stream": true.
-              </div>
-            )}
-          </div>
-        )}
-
-        <div className={styles.block}>
-          <div className={styles.blockTitle}>
-            <span>📤</span>
-            Response
-          </div>
-          {statusLine && <div className={styles.statusLine}>{statusLine}</div>}
-          {respHeaders && (
-            <details className={styles.details}>
-              <summary>📋 Response Headers</summary>
-              <pre className={styles.pre}>{respHeaders}</pre>
-            </details>
-          )}
-          <div ref={outputRef} className={styles.responseBox}>
-            {!respBody && !loading && (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIcon}>💭</div>
-                <div className={styles.emptyTitle}>Waiting for Response</div>
-                <div className={styles.emptySubtitle}>
-                  Click the "Send" button to send a request and view the
-                  response
-                </div>
-              </div>
-            )}
-            {loading && (
-              <div className={styles.loadingState}>
-                <div className={styles.loadingSpinner}></div>
-                <div className={styles.loadingText}>Sending request...</div>
-              </div>
-            )}
-            {respBody && !loading && (
-              <div className={styles.responseContent}>
-                <div className={styles.responseHeader}>
-                  <span className={styles.responseLabel}>
-                    📄 Response Content
-                  </span>
-                  <button
-                    className={styles.copyButton}
-                    onClick={() => navigator.clipboard.writeText(respBody)}
-                    title="Copy response content"
-                  >
-                    📋
-                  </button>
-                </div>
-                <pre className={styles.pre}>{respBody}</pre>
-              </div>
-            )}
           </div>
         </div>
       </div>

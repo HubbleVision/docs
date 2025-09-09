@@ -1,0 +1,237 @@
+.container {
+  background: var(--ifm-card-background-color);
+  border: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--ifm-card-background-color);
+  border-bottom: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ifm-color-content);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title::before {
+  content: "●";
+  color: var(--ifm-color-primary);
+  font-size: 0.75rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab {
+  padding: 8px 16px;
+  background: transparent;
+  border: 2px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.tab:hover {
+  background: rgba(var(--ifm-color-emphasis-300-rgb), 0.1);
+  color: var(--ifm-color-content);
+  border-color: rgba(var(--ifm-color-emphasis-300-rgb), 0.5);
+}
+
+.tab.active {
+  background: #04f9d2;
+  border-color: #04f9d2;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(4, 249, 210, 0.3);
+}
+
+.tab.active:hover {
+  background: #03e6bf;
+  border-color: #03e6bf;
+  color: #000000;
+  box-shadow: 0 4px 12px rgba(4, 249, 210, 0.4);
+}
+
+.codeContainer {
+  position: relative;
+  background: var(--ifm-pre-background);
+  overflow: auto;
+  border-radius: 0 0 12px 12px;
+}
+
+.codeBlock {
+  margin: 0 !important;
+  padding: 20px !important;
+  background: transparent !important;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow: auto;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.codeBlock pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+  font-family: inherit;
+}
+
+.fallbackCode {
+  margin: 0;
+  padding: 20px;
+  background: var(--ifm-pre-background);
+  color: var(--ifm-pre-color);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow: auto;
+  border-radius: 0 0 12px 12px;
+}
+
+.fallbackCode code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.copyButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(var(--ifm-color-emphasis-600-rgb), 0.1);
+  border: 1px solid rgba(var(--ifm-color-emphasis-600-rgb), 0.2);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--ifm-color-emphasis-700);
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  outline: none;
+}
+
+.copyButton:hover {
+  background: #04f9d2;
+  border-color: #04f9d2;
+  color: #000000;
+  box-shadow: 0 2px 8px rgba(4, 249, 210, 0.3);
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 4px rgba(4, 249, 210, 0.4);
+}
+
+/* Toast notification */
+.toast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #04f9d2;
+  color: #000000;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(4, 249, 210, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  animation: toastSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toastIcon {
+  font-size: 1rem;
+}
+
+.toastText {
+  white-space: nowrap;
+}
+
+@keyframes toastSlideIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    margin: 0.5rem 0;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 12px 16px;
+  }
+  
+  .tabs {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    gap: 0.25rem;
+  }
+  
+  .tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .codeBlock,
+  .fallbackCode {
+    font-size: 0.8rem;
+    padding: 16px !important;
+    line-height: 1.5;
+  }
+  
+  .copyButton {
+    top: 12px;
+    right: 12px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .toast {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .toastIcon {
+    font-size: 0.9rem;
+  }
+}

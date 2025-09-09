@@ -9,7 +9,8 @@
 /* 主容器 */
 .container {
   display: flex;
-  gap: 24px;
+  flex-direction: column;
+  gap: 20px;
   min-height: 600px;
   background: linear-gradient(
     135deg,
@@ -21,41 +22,78 @@
   border: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
 }
 
-/* 侧边栏 */
-.sidebar {
-  width: 340px;
-  flex-shrink: 0;
+/* Request Bar - Always at top */
+.requestBar {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  background: var(--ifm-card-background-color);
+  border: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Grid Container */
+.gridContainer {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: 
+    "mainContent sideControls";
+}
+
+/* Grid Items */
+.gridItem {
+  min-width: 0; /* Prevent overflow */
+}
+
+/* Main Content - Left side with code examples, request body, and response */
+.mainContent {
+  grid-area: mainContent;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-height: 100%;
-  overflow-y: auto;
 }
 
-.sidebar::-webkit-scrollbar {
-  width: 6px;
+.codeExamplesSection {
+  /* No specific grid area, handled by mainContent */
 }
 
-.sidebar::-webkit-scrollbar-track {
-  background: rgba(var(--ifm-color-emphasis-300-rgb), 0.1);
-  border-radius: 3px;
+.requestBodySection {
+  /* No specific grid area, handled by mainContent */
 }
 
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(var(--ifm-color-emphasis-600-rgb), 0.3);
-  border-radius: 3px;
+.responseSection {
+  /* No specific grid area, handled by mainContent */
 }
 
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--ifm-color-emphasis-600-rgb), 0.5);
-}
-
-/* 主内容区 */
-.main {
-  flex: 1;
+/* Side Controls - Right side with auth and headers */
+.sideControls {
+  grid-area: sideControls;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .requestBar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .gridContainer {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "mainContent"
+      "sideControls";
+  }
 }
 
 /* 卡片块 */
@@ -68,6 +106,66 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+}
+
+/* Compact Block - For smaller controls */
+.compactBlock {
+  background: var(--ifm-card-background-color);
+  border: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.compactBlock:hover {
+  border-color: rgba(var(--ifm-color-emphasis-300-rgb), 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Prominent Block - For important sections like Response */
+.prominentBlock {
+  background: var(--ifm-card-background-color);
+  border: 2px solid rgba(var(--ifm-color-primary-rgb), 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.prominentBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-secondary));
+  border-radius: 12px 12px 0 0;
+}
+
+/* Prominent Block Title */
+.prominentBlockTitle {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--ifm-color-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prominentBlockTitle::before {
+  content: "●";
+  color: var(--ifm-color-primary);
+  font-size: 0.8rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 /* 块标题 */
@@ -131,6 +229,26 @@
   min-height: 160px;
   font-family: var(--ifm-font-family-monospace);
   resize: vertical;
+}
+
+/* Compact Textarea - For smaller controls */
+.compactTextarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(var(--ifm-color-emphasis-300-rgb), 0.3);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+  font-size: 13px;
+  font-family: var(--ifm-font-family-monospace);
+  min-height: 80px;
+  resize: vertical;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.compactTextarea:focus {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--ifm-color-primary-rgb), 0.1);
 }
 
 /* 行布局 */
