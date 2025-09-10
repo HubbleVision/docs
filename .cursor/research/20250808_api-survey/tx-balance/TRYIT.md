@@ -23,7 +23,7 @@ curl -X POST 'https://api.hubble-rpc.xyz/balance/api/v1/sol/balance' \
   -H 'Content-Type: application/json' \
   -H 'HUBBLE-API-KEY: YOUR_KEY' \
   -d '{
-    "walletAddress": "<address>",
-    "tokenAddress": "<mint>"
+    "wallet": "<address>",
+    "token": "<mint>"
   }'
 ```

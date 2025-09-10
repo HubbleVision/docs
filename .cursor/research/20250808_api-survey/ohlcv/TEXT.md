@@ -11,7 +11,7 @@
 
 ### 1) POST /sol/candle（获取 K 线）
 - 入参（application/json）：
-  - 常见字段：`symbol`（如 `SOL/USDC`）、`interval`（如 `1m|5m|1h|1d`）、`limit`、可选时间窗口 `startTime/endTime`
+  - 常见字段：`symbol`（如 `So11111111111111111111111111111111111111112`）、`interval`（如 `1m|5m|1h|1d`）、`limit`、可选时间窗口 `startTime/endTime`
 - 返回（数组）：每根 K 线的 `timestamp`、`open`、`high`、`low`、`close`、`volume` 等
 
 ## 错误与速率

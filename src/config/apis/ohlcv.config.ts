@@ -17,7 +17,7 @@ export const ohlcvApiConfig: ApiConfig = {
       path: "/sol/candle",
       description: "Fetch OHLCV candle data",
       sampleBody: {
-        symbol: "SOL/USDC",
+        symbol: "So11111111111111111111111111111111111111112",
         interval: "1m",
         limit: 100,
       },
@@ -26,7 +26,7 @@ export const ohlcvApiConfig: ApiConfig = {
           name: "symbol",
           type: "string",
           required: true,
-          description: "Trading pair symbol (e.g., SOL/USDC)",
+          description: "Trading pair symbol (e.g., So11111111111111111111111111111111111111112)",
         },
         {
           name: "interval",
@@ -62,7 +62,7 @@ export const ohlcvApiConfig: ApiConfig = {
   -H "Content-Type: application/json" \\
   -H "HUBBLE-API-KEY: your-api-key" \\
   -d '{
-    "symbol": "SOL/USDC",
+    "symbol": "So11111111111111111111111111111111111111112",
     "interval": "1m",
     "limit": 100
   }'`
@@ -77,7 +77,7 @@ export const ohlcvApiConfig: ApiConfig = {
     'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
-    symbol: 'SOL/USDC',
+    symbol: 'So11111111111111111111111111111111111111112',
     interval: '1h',
     limit: 168, // Last week of hourly data
     startTime: Date.now() / 1000 - 7 * 24 * 60 * 60 // 7 days ago
@@ -99,7 +99,7 @@ headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
 data = {
-    "symbol": "SOL/USDC",
+    "symbol": "So11111111111111111111111111111111111111112",
     "interval": "1d",
     "limit": 30,  # Last 30 days
     "startTime": int(time.time()) - 30 * 24 * 60 * 60  # 30 days ago
@@ -117,7 +117,7 @@ for candle in result['data']:
           statusCode: 200,
           description: "Candle data retrieved successfully",
           body: {
-            symbol: "SOL/USDC",
+            symbol: "So11111111111111111111111111111111111111112",
             interval: "1m",
             data: [
               {

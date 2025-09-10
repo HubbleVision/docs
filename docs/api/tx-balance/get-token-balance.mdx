@@ -46,8 +46,8 @@ Query balance for any token on Solana:
 
 ```json
 {
-  "walletAddress": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-  "tokenAddress": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+  "wallet": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+  "token": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
   "balance": "1250000000",
   "decimals": 9,
   "uiAmount": 1.25,
@@ -73,8 +73,8 @@ curl -X POST "https://api.hubble-rpc.xyz/balance/api/v1/sol/balance" \
   -H "Content-Type: application/json" \
   -H "HUBBLE-API-KEY: your-api-key" \
   -d '{
-    "walletAddress": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-    "tokenAddress": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
+    "wallet": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+    "token": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
   }'
 ```
 
@@ -89,8 +89,8 @@ const response = await fetch('https://api.hubble-rpc.xyz/balance/api/v1/sol/bala
     'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
-    walletAddress: 'FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE',
-    tokenAddress: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn'
+    wallet: 'FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE',
+    token: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn'
   })
 });
 
@@ -110,8 +110,8 @@ headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
 data = {
-    "walletAddress": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-    "tokenAddress": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
+    "wallet": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+    "token": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
 }
 
 response = requests.post(url, json=data, headers=headers)

@@ -9,7 +9,7 @@ curl -X POST 'https://api.hubble-rpc.xyz/candle/api/v1/sol/candle' \
   -H 'Content-Type: application/json' \
   -H 'HUBBLE-API-KEY: YOUR_KEY' \
   -d '{
-    "symbol": "SOL/USDC",
+    "symbol": "So11111111111111111111111111111111111111112",
     "interval": "1m",
     "limit": 100
   }'

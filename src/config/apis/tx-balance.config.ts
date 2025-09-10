@@ -26,7 +26,7 @@ export const txBalanceApiConfig: ApiConfig = {
           name: "symbol",
           type: "string",
           required: true,
-          description: "Token symbol (e.g., SOL, ETH)",
+          description: "Token symbol (e.g., So11111111111111111111111111111111111111112)",
         },
         {
           name: "page",
@@ -120,7 +120,7 @@ export const txBalanceApiConfig: ApiConfig = {
   -H "Content-Type: application/json" \\
   -H "HUBBLE-API-KEY: your-api-key" \\
   -d '{
-    "symbol": "SOL",
+    "symbol": "So11111111111111111111111111111111111111112",
     "page": 1,
     "pageSize": 20
   }'`
@@ -135,7 +135,7 @@ export const txBalanceApiConfig: ApiConfig = {
     'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
-    symbol: 'SOL',
+    symbol: 'So11111111111111111111111111111111111111112',
     page: 1,
     pageSize: 20,
     start_time: 1642680000,
@@ -157,7 +157,7 @@ headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
 data = {
-    "symbol": "SOL",
+    "symbol": "So11111111111111111111111111111111111111112",
     "page": 1,
     "pageSize": 20,
     "start_time": 1642680000,
@@ -228,18 +228,18 @@ result = response.json()`
       path: "/balance/api/v1/sol/balance",
       description: "Get balance for a wallet address/token",
       sampleBody: {
-        walletAddress: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-        tokenAddress: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+        wallet: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+        token: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
       },
       requestParameters: [
         {
-          name: "walletAddress",
+          name: "wallet",
           type: "string",
           required: true,
           description: "Solana wallet address",
         },
         {
-          name: "tokenAddress",
+          name: "token",
           type: "string",
           required: true,
           description: "Token mint address",
@@ -253,8 +253,8 @@ result = response.json()`
   -H "Content-Type: application/json" \\
   -H "HUBBLE-API-KEY: your-api-key" \\
   -d '{
-    "walletAddress": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-    "tokenAddress": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
+    "wallet": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+    "token": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
   }'`
         },
         {
@@ -267,8 +267,8 @@ result = response.json()`
     'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
-    walletAddress: 'FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE',
-    tokenAddress: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn'
+    wallet: 'FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE',
+    token: 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn'
   })
 });
 
@@ -286,8 +286,8 @@ headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
 data = {
-    "walletAddress": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-    "tokenAddress": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
+    "wallet": "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+    "token": "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn"
 }
 
 response = requests.post(url, json=data, headers=headers)
@@ -300,8 +300,8 @@ print(f"Balance: {result['uiAmount']} {result['symbol']}")`
           statusCode: 200,
           description: "Balance retrieved successfully",
           body: {
-            walletAddress: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
-            tokenAddress: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+            wallet: "FZ1t8TZtx7VSCQdBsxvFJiezj9paUBF6Ub7RKA2eTGyE",
+            token: "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
             balance: "1250000000",
             decimals: 9,
             uiAmount: 1.25,

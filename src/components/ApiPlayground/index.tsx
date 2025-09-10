@@ -194,6 +194,12 @@ export default function ApiPlayground({
       <div className={styles.gridContainer}>
         {/* Left Side - Main Content */}
         <div className={styles.mainContent}>
+          {/* Code Examples - Moved below Response */}
+          {endpoint.codeExamples && endpoint.codeExamples.length > 0 && (
+            <div className={styles.codeExamplesSection}>
+              <CodeExamples examples={endpoint.codeExamples} />
+            </div>
+          )}
           {/* Request Body */}
           {method !== "GET" && (
             <div className={styles.requestBodySection}>
@@ -209,7 +215,8 @@ export default function ApiPlayground({
                 />
                 {endpoint.supportsStream && (
                   <div className={styles.muted}>
-                    Tip: Text2SQL/Chart will return SSE stream when "stream": true.
+                    Tip: Text2SQL/Chart will return SSE stream when "stream":
+                    true.
                   </div>
                 )}
               </div>
@@ -223,7 +230,9 @@ export default function ApiPlayground({
                 <span>📤</span>
                 Response
               </div>
-              {statusLine && <div className={styles.statusLine}>{statusLine}</div>}
+              {statusLine && (
+                <div className={styles.statusLine}>{statusLine}</div>
+              )}
               {respHeaders && (
                 <details className={styles.details}>
                   <summary>📋 Response Headers</summary>
@@ -234,7 +243,9 @@ export default function ApiPlayground({
                 {!respBody && !loading && (
                   <div className={styles.emptyState}>
                     <div className={styles.emptyIcon}>💭</div>
-                    <div className={styles.emptyTitle}>Waiting for Response</div>
+                    <div className={styles.emptyTitle}>
+                      Waiting for Response
+                    </div>
                     <div className={styles.emptySubtitle}>
                       Click the "Send" button to send a request and view the
                       response
@@ -267,13 +278,6 @@ export default function ApiPlayground({
               </div>
             </div>
           </div>
-
-          {/* Code Examples - Moved below Response */}
-          {endpoint.codeExamples && endpoint.codeExamples.length > 0 && (
-            <div className={styles.codeExamplesSection}>
-              <CodeExamples examples={endpoint.codeExamples} />
-            </div>
-          )}
         </div>
 
         {/* Right Side - Controls */}

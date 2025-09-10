@@ -48,7 +48,7 @@ Choose from various time frames for technical analysis:
 
 ```json
 {
-  "symbol": "SOL/USDC",
+  "symbol": "So11111111111111111111111111111111111111112",
   "interval": "1m",
   "data": [
     {
@@ -102,7 +102,7 @@ curl -X POST "https://api.hubble-rpc.xyz/candle/api/v1/sol/candle" \
   -H "Content-Type: application/json" \
   -H "HUBBLE-API-KEY: your-api-key" \
   -d '{
-    "symbol": "SOL/USDC",
+    "symbol": "So11111111111111111111111111111111111111112",
     "interval": "1m",
     "limit": 100
   }'
@@ -119,7 +119,7 @@ const response = await fetch('https://api.hubble-rpc.xyz/candle/api/v1/sol/candl
     'HUBBLE-API-KEY': 'your-api-key'
   },
   body: JSON.stringify({ 
-    symbol: 'SOL/USDC',
+    symbol: 'So11111111111111111111111111111111111111112',
     interval: '1h',
     limit: 168, // Last week of hourly data
     startTime: Date.now() / 1000 - 7 * 24 * 60 * 60 // 7 days ago
@@ -143,7 +143,7 @@ headers = {
     "HUBBLE-API-KEY": "your-api-key"
 }
 data = {
-    "symbol": "SOL/USDC",
+    "symbol": "So11111111111111111111111111111111111111112",
     "interval": "1d",
     "limit": 30,  # Last 30 days
     "startTime": int(time.time()) - 30 * 24 * 60 * 60  # 30 days ago

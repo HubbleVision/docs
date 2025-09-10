@@ -12,7 +12,7 @@
 ### 1) POST /balance/api/v1/sol/balance（余额查询）
 - 含义：查询指定钱包地址与代币合约的余额
 - 入参（application/json）：
-  - 常见字段：`walletAddress`、`tokenAddress`（具体字段名以在线表单/接口文档为准）
+  - 常见字段：`wallet`、`token`（具体字段名以在线表单/接口文档为准）
 - 返回：代币余额等字段
 
 ### 2) POST /tx/api/v1/sol/tx（交易列表）
