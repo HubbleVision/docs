@@ -242,6 +242,114 @@ li {
   margin-bottom: 0.5rem !important;
 }
 
+/* Table typography customization */
+table {
+  font-size: 0.875rem !important; /* 14px - smaller for better table readability */
+  line-height: 1.5 !important;
+  margin: 1.5rem 0 !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+/* Table headers */
+table th {
+  font-size: 0.875rem !important; /* 14px */
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  padding: 0.75rem 1rem !important;
+  /* text-align: left !important; */
+  /* background-color: rgba(4, 249, 210, 0.1) !important; */
+  /* border-bottom: 2px solid var(--ifm-color-primary) !important; */
+}
+
+/* Table cells */
+table td {
+  font-size: 0.875rem !important; /* 14px */
+  line-height: 1.5 !important;
+  padding: 0.625rem 1rem !important;
+  vertical-align: top !important;
+  border-bottom: 1px solid var(--hubble-text-secondary) !important;
+}
+
+/* Table rows - unified background */
+table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: transparent !important; /* 统一透明背景 */
+}
+
+/* 移除斑马纹效果 */
+table tbody tr:nth-child(odd),
+table tbody tr:nth-child(even) {
+  background-color: transparent !important;
+}
+
+/* 保留悬停效果但使用更淡的颜色 */
+table tbody tr:hover {
+  background-color: rgba(4, 249, 210, 0.03) !important;
+}
+
+/* Code in table cells */
+table td code,
+table th code {
+  font-size: 0.8125rem !important; /* 13px - slightly smaller in tables */
+  background-color: rgba(4, 249, 210, 0.15) !important;
+  padding: 0.125rem 0.25rem !important;
+}
+
+/* Compact table variant */
+.table-compact table,
+table.compact {
+  font-size: 0.8125rem !important; /* 13px */
+}
+
+.table-compact table th,
+table.compact th {
+  font-size: 0.8125rem !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.table-compact table td,
+table.compact td {
+  font-size: 0.8125rem !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Large table variant */
+.table-large table,
+table.large {
+  font-size: 1rem !important; /* 16px */
+}
+
+.table-large table th,
+table.large th {
+  font-size: 1rem !important;
+  padding: 1rem 1.25rem !important;
+}
+
+.table-large table td,
+table.large td {
+  font-size: 1rem !important;
+  padding: 0.875rem 1.25rem !important;
+}
+
+/* Responsive table typography */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.8125rem !important; /* 13px on mobile */
+  }
+  
+  table th,
+  table td {
+    font-size: 0.8125rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+  
+  table td code,
+  table th code {
+    font-size: 0.75rem !important; /* 12px on mobile */
+  }
+}
+
 /* Blockquote styling */
 blockquote {
   border-left: 4px solid var(--ifm-color-primary) !important;
