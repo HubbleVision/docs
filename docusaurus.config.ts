@@ -126,7 +126,7 @@ const config: Config = {
     },
     breadcrumbs: false,
     navbar: {
-      title: "Hubble",
+      // title: "Hubble",
       logo: {
         alt: "Hubble Logo",
         src: "img/logo.svg",
